@@ -6,7 +6,10 @@ namespace {
 
     use My\Model\User;
     use My\Model\UserRepository;
+    use Prooph\EventStore\Adapter\Adapter;
+    use Prooph\EventStore\Adapter\Doctrine\DoctrineEventStoreAdapter;
     use Prooph\EventStore\EventStore;
+    use Prooph\EventStore\Stream\StreamName;
 
     $container = require __DIR__ . '/app/container.php';
 
@@ -14,6 +17,21 @@ namespace {
     /** @var EventStore $eventStore  */
     $userRepository = $container->get(UserRepository::class);
     /** @var UserRepository $userRepository */
+
+    $doctrineAdapter = $container[Adapter::class];
+    /** @var $doctrineAdapter DoctrineEventStoreAdapter */
+
+    try {
+        $doctrineAdapter->createSchemaFor(new StreamName('event_stream'), [
+            'aggregate_type' => null,
+            'aggregate_id' => null
+        ]);
+    } catch (\Exception $exception) {
+        if (strpos($exception->getMessage(), 'table event_stream already exists') === false) {
+            throw $exception;
+        }
+        // mute the exception - we expected the table to exist already
+    }
 
     //Ok lets start a new transaction and create a user
     $eventStore->beginTransaction();

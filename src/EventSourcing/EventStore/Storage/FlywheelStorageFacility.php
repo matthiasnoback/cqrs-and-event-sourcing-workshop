@@ -7,7 +7,7 @@ use JamesMoss\Flywheel\Config;
 use JamesMoss\Flywheel\Document;
 use JamesMoss\Flywheel\Repository;
 
-class FlywheelStorageFacility implements StorageFacility
+final class FlywheelStorageFacility implements StorageFacility
 {
     /**
      * @var Repository
@@ -34,14 +34,7 @@ class FlywheelStorageFacility implements StorageFacility
         ;
 
         foreach ($documents as $document) {
-            yield [
-                'event_id' => $document->event_id,
-                'event_type' => $document->event_type,
-                'aggregate_type' => $document->aggregate_type,
-                'aggregate_id' => $document->aggregate_id,
-                'payload' => $document->payload,
-                'created_at' => $document->created_at
-            ];
+            yield get_object_vars($document);
         }
     }
 

@@ -4,14 +4,14 @@ namespace Twitter\Domain\Model;
 
 use EventSourcing\Aggregate\Event;
 use EventSourcing\Aggregate\EventCapabilities;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 final class MessageCreated implements Event
 {
     use EventCapabilities;
 
     /**
-     * @var Uuid
+     * @var UuidInterface
      */
     private $id;
 
@@ -21,14 +21,14 @@ final class MessageCreated implements Event
     private $text;
 
     /**
-     * @return Uuid
+     * @return UuidInterface
      */
-    public function id() : Uuid
+    public function id() : UuidInterface
     {
         return $this->id;
     }
 
-    public function __construct(Uuid $id, string $text)
+    public function __construct(UuidInterface $id, string $text)
     {
         $this->text = $text;
         $this->id = $id;

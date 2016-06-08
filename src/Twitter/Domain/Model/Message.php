@@ -4,7 +4,7 @@ namespace Twitter\Domain\Model;
 
 use EventSourcing\Aggregate\EventSourcingCapabilities;
 use EventSourcing\Aggregate\EventSourcedAggregate;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 final class Message implements EventSourcedAggregate
 {
@@ -13,7 +13,7 @@ final class Message implements EventSourcedAggregate
     private $text;
     private $id;
 
-    public static function createWithText(Uuid $id, $text)
+    public static function createWithText(UuidInterface $id, $text)
     {
         $instance = new static();
         $instance->recordThat(new MessageCreated($id, $text));

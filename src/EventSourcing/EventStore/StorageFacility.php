@@ -1,6 +1,6 @@
 <?php
 
-namespace Simple\EventStore;
+namespace EventSourcing\EventStore;
 
 interface StorageFacility
 {
@@ -17,11 +17,4 @@ interface StorageFacility
     public function loadRawEvents(string $aggregateType, string $aggregateId);
 
     public function persistRawEvent(array $rawEventData);
-
-    /**
-     * @param callable $callable
-     * @throws TransactionFailed
-     * @return void
-     */
-    public function transactional(callable $callable);
 }

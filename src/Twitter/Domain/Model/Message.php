@@ -2,11 +2,11 @@
 
 namespace Twitter\Domain\Model;
 
-use Rhumsaa\Uuid\Uuid;
-use Simple\EventStore\EventSourced;
-use Simple\EventStore\EventSourcingCapabilities;
+use EventSourcing\Aggregate\EventSourcingCapabilities;
+use EventSourcing\Aggregate\EventSourcedAggregate;
+use Ramsey\Uuid\Uuid;
 
-final class Message implements EventSourced
+final class Message implements EventSourcedAggregate
 {
     use EventSourcingCapabilities;
 

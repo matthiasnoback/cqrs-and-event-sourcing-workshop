@@ -1,6 +1,6 @@
 <?php
 
-namespace Simple\EventStore;
+namespace EventSourcing\Aggregate;
 
 /**
  * Using this trait in an event-sourced aggregate will make it fully compliant to the contract defined by the
@@ -14,11 +14,6 @@ trait EventSourcingCapabilities
      * @var object[]
      */
     private $recordedEvents = [];
-
-    /**
-     * @var int
-     */
-    private $playhead = 1;
 
     /**
      * Enforce construction through either a named constructor or the `reconstitute()` method.
@@ -53,19 +48,15 @@ trait EventSourcingCapabilities
 
     private function recordThat(Event $event)
     {
-        $this->playhead++;
-
         $enrichedEvent = $event
-            ->withMetadata('created_at', new \DateTimeImmutable())
-            ->withMetadata('playhead', $this->playhead);
+            ->withMetadata('created_at', new \DateTimeImmutable());
 
         $this->recordedEvents[] = $enrichedEvent;
         $this->apply($enrichedEvent);
     }
+    
     private function apply(Event $event)
     {
-        $this->playhead = $event->metadata('playhead');
-
         $parts = explode('\\', (get_class($event)));
         $eventName = end($parts);
         $name = 'when' . $eventName;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Simple\EventStore;
+namespace EventSourcing\Aggregate;
 
 trait EventCapabilities
 {

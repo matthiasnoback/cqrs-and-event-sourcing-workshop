@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3c37602d1c3623bda384cd27a6b810c1",
-    "content-hash": "0171ede6263f58eabd016b062136a000",
+    "hash": "7c3fcc096ba778c9c7fc6cd00361d0ab",
+    "content-hash": "a5afad72b6648aec3e439e57b2e94381",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -59,33 +59,6 @@
                 "validation"
             ],
             "time": "2016-03-22 14:34:51"
-        },
-        {
-            "name": "container-interop/container-interop",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/container-interop/container-interop.git",
-                "reference": "fc08354828f8fd3245f77a66b9e23a6bca48297e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/container-interop/container-interop/zipball/fc08354828f8fd3245f77a66b9e23a6bca48297e",
-                "reference": "fc08354828f8fd3245f77a66b9e23a6bca48297e",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Interop\\Container\\": "src/Interop/Container/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
-            "time": "2014-12-30 15:22:37"
         },
         {
             "name": "doctrine/annotations",
@@ -605,346 +578,55 @@
             "time": "2016-04-03 06:00:07"
         },
         {
-            "name": "pimple/pimple",
-            "version": "v3.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/a30f7d6e57565a2e1a316e1baf2a483f788b258a",
-                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Pimple": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Pimple, a simple Dependency Injection Container",
-            "homepage": "http://pimple.sensiolabs.org",
-            "keywords": [
-                "container",
-                "dependency injection"
-            ],
-            "time": "2015-09-11 15:10:35"
-        },
-        {
-            "name": "prooph/common",
-            "version": "v3.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/prooph/common.git",
-                "reference": "468502f8c94c7f01dfac6be2bbcb55ec5f31d44c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/prooph/common/zipball/468502f8c94c7f01dfac6be2bbcb55ec5f31d44c",
-                "reference": "468502f8c94c7f01dfac6be2bbcb55ec5f31d44c",
-                "shasum": ""
-            },
-            "require": {
-                "beberlei/assert": "~2.3",
-                "php": "~5.5|~7.0",
-                "ramsey/uuid": "~2.8"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.8",
-                "satooshi/php-coveralls": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Prooph\\Common\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sascha-Oliver Prolic",
-                    "email": "saschaprolic@googlemail.com"
-                },
-                {
-                    "name": "Alexander Miertsch",
-                    "email": "contact@prooph.de",
-                    "homepage": "http://www.prooph.de"
-                }
-            ],
-            "description": "Common classes used across prooph packages",
-            "homepage": "http://getprooph.org/",
-            "keywords": [
-                "common",
-                "prooph"
-            ],
-            "time": "2016-05-14 06:40:38"
-        },
-        {
-            "name": "prooph/event-sourcing",
-            "version": "v4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/prooph/event-sourcing.git",
-                "reference": "159ce90305c5fcba1677af6b152b31ef983c0575"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/prooph/event-sourcing/zipball/159ce90305c5fcba1677af6b152b31ef983c0575",
-                "reference": "159ce90305c5fcba1677af6b152b31ef983c0575",
-                "shasum": ""
-            },
-            "require": {
-                "beberlei/assert": "~2.3",
-                "php": "~5.5|~7.0",
-                "prooph/common": "~3.5",
-                "ramsey/uuid": "~2.8"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.8",
-                "prooph/event-store": "dev-develop",
-                "satooshi/php-coveralls": "dev-master"
-            },
-            "suggest": {
-                "prooph/event-store": "^6.0 - Use prooph/event-store to persist recorded events in event streams"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Prooph\\EventSourcing\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sascha-Oliver Prolic",
-                    "email": "saschaprolic@googlemail.com"
-                },
-                {
-                    "name": "Alexander Miertsch",
-                    "email": "contact@prooph.de",
-                    "homepage": "http://www.prooph.de"
-                }
-            ],
-            "description": "PHP EventSourcing library",
-            "homepage": "http://getprooph.org/",
-            "keywords": [
-                "EventSourcing",
-                "ddd",
-                "prooph"
-            ],
-            "time": "2015-11-22 22:43:03"
-        },
-        {
-            "name": "prooph/event-store",
-            "version": "v6.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/prooph/event-store.git",
-                "reference": "0cf599bc781f3afe382874d440caffd37c29e235"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/prooph/event-store/zipball/0cf599bc781f3afe382874d440caffd37c29e235",
-                "reference": "0cf599bc781f3afe382874d440caffd37c29e235",
-                "shasum": ""
-            },
-            "require": {
-                "beberlei/assert": "~2.3",
-                "php": "~5.5|~7.0",
-                "prooph/common": "~3.3"
-            },
-            "conflict": {
-                "sandrokeil/interop-config": "<1.0"
-            },
-            "require-dev": {
-                "container-interop/container-interop": "^1.1",
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.8",
-                "ramsey/uuid": "~2.8",
-                "sandrokeil/interop-config": "^1.0",
-                "satooshi/php-coveralls": "^1.0",
-                "tobiju/bookdown-bootswatch-templates": "^1.0",
-                "zendframework/zend-servicemanager": "~2.6"
-            },
-            "suggest": {
-                "container-interop/container-interop": "For usage of provided factories",
-                "prooph/event-sourcing": "Basic functionality for event sourced aggregates",
-                "prooph/event-store-doctrine-adapter": "For usage with doctrine dbal as event store adapter",
-                "prooph/event-store-flywheel-adapter": "For usage with flywheel as event store adapter",
-                "prooph/event-store-mongodb-adapter": "For usage with mongodb as event store adapter",
-                "prooph/service-bus": "Message bus facade to connect the event store with messaging systems",
-                "prooph/snapshot-doctrine-adapter": "For usage with doctrine dbal as snapshot adapter",
-                "prooph/snapshot-memcached-adapter": "For usage with memcached as snapshot adapter",
-                "prooph/snapshot-mongodb-adapter": "For usage with mongodb as snapshot adapter",
-                "sandrokeil/interop-config": "For usage of provided factories"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Prooph\\EventStore\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sascha-Oliver Prolic",
-                    "email": "saschaprolic@googlemail.com"
-                },
-                {
-                    "name": "Alexander Miertsch",
-                    "email": "contact@prooph.de",
-                    "homepage": "http://www.prooph.de"
-                }
-            ],
-            "description": "PHP EventStore Implementation",
-            "homepage": "http://getprooph.org/",
-            "keywords": [
-                "EventSourcing",
-                "EventStore",
-                "ddd",
-                "prooph"
-            ],
-            "time": "2016-05-08 17:51:53"
-        },
-        {
-            "name": "prooph/event-store-doctrine-adapter",
-            "version": "v3.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/prooph/event-store-doctrine-adapter.git",
-                "reference": "07e681986403e808a4764d5d73b96cad1adf1f2f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/prooph/event-store-doctrine-adapter/zipball/07e681986403e808a4764d5d73b96cad1adf1f2f",
-                "reference": "07e681986403e808a4764d5d73b96cad1adf1f2f",
-                "shasum": ""
-            },
-            "require": {
-                "beberlei/assert": "^2.3",
-                "doctrine/dbal": "^2.5",
-                "php": "~5.5|~7.0",
-                "prooph/common": "^3.7",
-                "prooph/event-store": "^6.2"
-            },
-            "conflict": {
-                "sandrokeil/interop-config": "<1.0"
-            },
-            "require-dev": {
-                "container-interop/container-interop": "^1.1",
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "^4.8",
-                "sandrokeil/interop-config": "^1.0",
-                "satooshi/php-coveralls": "^1.0",
-                "sebastian/comparator": "^1.2"
-            },
-            "suggest": {
-                "container-interop/container-interop": "For usage of provided factories",
-                "sandrokeil/interop-config": "For usage of provided factories"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Prooph\\EventStore\\Adapter\\Doctrine\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Jan Sorgalla",
-                    "email": "jan.sorgalla@dotsunited.de",
-                    "homepage": "http://dotsunited.de"
-                },
-                {
-                    "name": "Alexander Miertsch",
-                    "email": "contact@prooph.de",
-                    "homepage": "http://www.prooph.de/"
-                },
-                {
-                    "name": "Sascha-Oliver Prolic",
-                    "email": "saschaprolic@googlemail.com"
-                }
-            ],
-            "description": "Doctrine Adapter for ProophEventStore",
-            "homepage": "http://getprooph.org/",
-            "time": "2016-05-14 06:22:19"
-        },
-        {
             "name": "ramsey/uuid",
-            "version": "2.9.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "b2ef4dd9584268d73f92f752a62bc24cd534dc9a"
+                "reference": "b4fe3b7387cb323fd15ad5837cae992422c9fa5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/b2ef4dd9584268d73f92f752a62bc24cd534dc9a",
-                "reference": "b2ef4dd9584268d73f92f752a62bc24cd534dc9a",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/b4fe3b7387cb323fd15ad5837cae992422c9fa5c",
+                "reference": "b4fe3b7387cb323fd15ad5837cae992422c9fa5c",
                 "shasum": ""
             },
             "require": {
                 "paragonie/random_compat": "^1.0|^2.0",
-                "php": ">=5.3.3"
+                "php": ">=5.4"
             },
             "replace": {
                 "rhumsaa/uuid": "self.version"
             },
             "require-dev": {
-                "doctrine/dbal": ">=2.3",
+                "apigen/apigen": "^4.1",
+                "codeception/aspect-mock": "1.0.0",
+                "goaop/framework": "1.0.0-alpha.2",
+                "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
-                "moontoast/math": "~1.1",
-                "phpunit/phpunit": "~4.1|~5.0",
-                "satooshi/php-coveralls": "~0.6",
-                "squizlabs/php_codesniffer": "^2.3",
-                "symfony/console": "~2.3|~3.0"
+                "mockery/mockery": "^0.9.4",
+                "moontoast/math": "^1.1",
+                "phpunit/phpunit": "^4.7|^5.0",
+                "satooshi/php-coveralls": "^0.6.1",
+                "squizlabs/php_codesniffer": "^2.3"
             },
             "suggest": {
-                "doctrine/dbal": "Allow the use of a UUID as doctrine field type.",
-                "moontoast/math": "Support for converting UUID to 128-bit integer (in string form).",
-                "symfony/console": "Support for use of the bin/uuid command line tool."
+                "ext-libsodium": "Provides the PECL libsodium extension for use with the SodiumRandomGenerator",
+                "ext-uuid": "Provides the PECL UUID extension for use with the PeclUuidTimeGenerator and PeclUuidRandomGenerator",
+                "ircmaxell/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
+                "moontoast/math": "Provides support for converting UUID to 128-bit integer (in string form).",
+                "ramsey/uuid-console": "A console application for generating UUIDs with ramsey/uuid",
+                "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
             },
-            "bin": [
-                "bin/uuid"
-            ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "Rhumsaa\\Uuid\\": "src/"
+                    "Ramsey\\Uuid\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -957,64 +639,23 @@
                     "email": "marijn.huizendveld@gmail.com"
                 },
                 {
+                    "name": "Thibaud Fabre",
+                    "email": "thibaud@aztech.io"
+                },
+                {
                     "name": "Ben Ramsey",
-                    "homepage": "http://benramsey.com"
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
                 }
             ],
-            "description": "A PHP 5.3+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).",
+            "description": "Formerly rhumsaa/uuid. A PHP 5.4+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).",
             "homepage": "https://github.com/ramsey/uuid",
             "keywords": [
                 "guid",
                 "identifier",
                 "uuid"
             ],
-            "time": "2016-03-22 18:20:19"
-        },
-        {
-            "name": "xtreamwayz/pimple-container-interop",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/xtreamwayz/pimple-container-interop.git",
-                "reference": "de8322e4b61a1f25d6fa21ce29f0368c52d7cec6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/xtreamwayz/pimple-container-interop/zipball/de8322e4b61a1f25d6fa21ce29f0368c52d7cec6",
-                "reference": "de8322e4b61a1f25d6fa21ce29f0368c52d7cec6",
-                "shasum": ""
-            },
-            "require": {
-                "container-interop/container-interop": "^1.0",
-                "pimple/pimple": "^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.0",
-                "squizlabs/php_codesniffer": "^2.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Xtreamwayz\\Pimple\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Geert Eltink",
-                    "homepage": "https://xtreamwayz.com/"
-                }
-            ],
-            "description": "This project adds container-interop compatibility to Pimple 3.",
-            "keywords": [
-                "container-interop",
-                "dependency injection",
-                "pimple"
-            ],
-            "time": "2015-12-16 17:30:52"
+            "time": "2016-04-24 00:30:41"
         }
     ],
     "packages-dev": [],

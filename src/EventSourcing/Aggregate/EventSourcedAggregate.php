@@ -1,12 +1,12 @@
 <?php
 
-namespace Simple\EventStore;
+namespace EventSourcing\Aggregate;
 
 /**
  * If the events recorded inside an object need to be persisted using the `EventStore`, it should implement this
  * interface.
  */
-interface EventSourced
+interface EventSourcedAggregate
 {
     /**
      * @return string
@@ -14,7 +14,7 @@ interface EventSourced
     public function id() : string;
 
     /**
-     * @return object
+     * @return object[]
      */
     public function popRecordedEvents();
 

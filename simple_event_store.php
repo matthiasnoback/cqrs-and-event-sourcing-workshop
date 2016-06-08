@@ -3,10 +3,10 @@
 namespace {
 
     use Doctrine\DBAL\DriverManager;
-    use My\Model\User;
-    use Rhumsaa\Uuid\Uuid;
-    use Simple\EventStore\DoctrineDbalStorageFacility;
-    use Simple\EventStore\EventStore;
+    use Doctrine\DBAL\Exception\TableExistsException;
+    use EventSourcing\EventStore\Storage\DoctrineDbalStorageFacility;
+    use EventSourcing\EventStore\EventStore;
+    use Ramsey\Uuid\Uuid;
     use Twitter\Domain\Model\Message;
 
     require __DIR__ . '/vendor/autoload.php';
@@ -20,7 +20,11 @@ namespace {
     $tableName = 'simple_event_store';
     $storageFacility = new DoctrineDbalStorageFacility($connection, $tableName);
 
-    //$storageFacility->setUp();
+    try {
+        $storageFacility->setUp();
+    } catch (TableExistsException $exception) {
+        // mute
+    }
 
     $eventStore = new EventStore($storageFacility);
 

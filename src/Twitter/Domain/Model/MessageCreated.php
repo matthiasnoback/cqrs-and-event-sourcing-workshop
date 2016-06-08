@@ -2,9 +2,9 @@
 
 namespace Twitter\Domain\Model;
 
-use Rhumsaa\Uuid\Uuid;
-use Simple\EventStore\Event;
-use Simple\EventStore\EventCapabilities;
+use EventSourcing\Aggregate\Event;
+use EventSourcing\Aggregate\EventCapabilities;
+use Ramsey\Uuid\Uuid;
 
 final class MessageCreated implements Event
 {

@@ -1,7 +1,10 @@
 <?php
 
-namespace Simple\EventStore;
+namespace EventSourcing\Aggregate;
 
+/**
+ * Events that are supposed to be persisted using the EventStore should implement this interface.
+ */
 interface Event
 {
     /**

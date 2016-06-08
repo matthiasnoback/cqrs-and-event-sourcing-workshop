@@ -1,9 +1,8 @@
 {
     "require": {
-        "prooph/event-sourcing": "^4.0",
-        "prooph/event-store": "^6.2",
-        "prooph/event-store-doctrine-adapter": "^3.1",
-        "xtreamwayz/pimple-container-interop": "^1.0"
+        "ramsey/uuid": "^3.4",
+        "beberlei/assert": "^2.5",
+        "doctrine/dbal": "^2.5"
     },
     "autoload": {
         "psr-4": {

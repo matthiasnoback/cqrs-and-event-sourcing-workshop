@@ -1,8 +1,8 @@
 <?php
 
-namespace Simple\EventStore;
+namespace EventSourcing\EventStore;
 
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 final class EventStore
 {
@@ -18,25 +18,22 @@ final class EventStore
 
     public function append(string $aggregateType, string $aggregateId, array $events)
     {
-        $this->storageFacility->transactional(function () use ($events, $aggregateType, $aggregateId) {
-            foreach ($events as $event) {
-                $id = (string)Uuid::uuid4();
-                $eventName = get_class($event);
-                $payload = $this->extractPayload($event);
-                $createdAt = $event->metadata('created_at')->format('Y-m-d\TH:i:s.u');
-                $this->storageFacility->persistRawEvent(
-                    [
-                        'event_name' => $eventName,
-                        'event_id' => $id,
-                        'payload' => $payload,
-                        'aggregate_type' => $aggregateType,
-                        'aggregate_id' => $aggregateId,
-                        'created_at' => $createdAt,
-                        'playhead' => $event->metadata('playhead')
-                    ]
-                );
-            }
-        });
+        foreach ($events as $event) {
+            $id = (string)Uuid::uuid4();
+            $eventType = get_class($event);
+            $payload = $this->extractPayload($event);
+            $createdAt = $event->metadata('created_at')->format('Y-m-d\TH:i:s.u');
+            $this->storageFacility->persistRawEvent(
+                [
+                    'event_type' => $eventType,
+                    'event_id' => $id,
+                    'payload' => $payload,
+                    'aggregate_type' => $aggregateType,
+                    'aggregate_id' => $aggregateId,
+                    'created_at' => $createdAt
+                ]
+            );
+        }
     }
 
     public function loadEvents($aggregateType, $aggregateId)

@@ -3,7 +3,7 @@
 namespace {
     use EventSourcing\EventStore\EventStore;
     use Ramsey\Uuid\Uuid;
-    use Twitter\Domain\Model\Message;
+    use Twitsup\Domain\Model\Message;
 
     require __DIR__ . '/vendor/autoload.php';
     

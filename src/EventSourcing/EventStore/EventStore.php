@@ -2,6 +2,7 @@
 
 namespace EventSourcing\EventStore;
 
+use EventSourcing\Projection\EventDispatcher;
 use Ramsey\Uuid\Uuid;
 
 final class EventStore
@@ -10,10 +11,15 @@ final class EventStore
      * @var StorageFacility
      */
     private $storageFacility;
+    /**
+     * @var EventDispatcher
+     */
+    private $eventDispatcher;
 
-    public function __construct(StorageFacility $storageFacility)
+    public function __construct(StorageFacility $storageFacility, EventDispatcher $eventDispatcher)
     {
         $this->storageFacility = $storageFacility;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function append(string $aggregateType, string $aggregateId, array $events)
@@ -33,6 +39,8 @@ final class EventStore
                     'created_at' => $createdAt
                 ]
             );
+
+            $this->eventDispatcher->dispatch($event);
         }
     }
 

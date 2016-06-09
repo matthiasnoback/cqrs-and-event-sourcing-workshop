@@ -1,6 +1,6 @@
 <?php
 
-namespace Twitter\ReadModel;
+namespace Twitsup\ReadModel;
 
 use JamesMoss\Flywheel\Config;
 use JamesMoss\Flywheel\Document;

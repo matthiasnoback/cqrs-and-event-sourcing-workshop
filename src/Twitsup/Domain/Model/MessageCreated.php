@@ -1,6 +1,6 @@
 <?php
 
-namespace Twitter\Domain\Model;
+namespace Twitsup\Domain\Model;
 
 use EventSourcing\Aggregate\Event;
 use EventSourcing\Aggregate\EventCapabilities;

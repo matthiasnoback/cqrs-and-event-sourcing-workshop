@@ -1,8 +1,8 @@
 <?php
 
-namespace Twitter\ReadModel;
+namespace Twitsup\ReadModel;
 
-use Twitter\Domain\Model\MessageCreated;
+use Twitsup\Domain\Model\MessageCreated;
 
 class MessagesProjector
 {

@@ -5,9 +5,9 @@ use EventSourcing\EventStore\EventStore;
 use EventSourcing\EventStore\Storage\FlywheelStorageFacility;
 use EventSourcing\EventStore\StorageFacility;
 use EventSourcing\Projection\EventDispatcher;
-use Twitter\Domain\Model\MessageCreated;
-use Twitter\ReadModel\MessagesProjector;
-use Twitter\ReadModel\AllMessagesListRepository;
+use Twitsup\Domain\Model\MessageCreated;
+use Twitsup\ReadModel\MessagesProjector;
+use Twitsup\ReadModel\AllMessagesListRepository;
 use Xtreamwayz\Pimple\Container;
 
 $config = [
@@ -44,10 +44,10 @@ $container[EventStore::class] = function ($container) {
 /*
  * Domain model
  */
-$container['Twitter\Domain\Model\MessageRepository'] = function ($container) {
+$container['Twitsup\Domain\Model\MessageRepository'] = function ($container) {
     return new EventSourcedAggregateRepository(
         $container[EventSourcing\EventStore\EventStore::class],
-        \Twitter\Domain\Model\Message::class
+        \Twitsup\Domain\Model\Message::class
     );
 };
 

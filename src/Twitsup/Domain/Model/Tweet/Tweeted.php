@@ -1,12 +1,12 @@
 <?php
 
-namespace Twitsup\Domain\Model;
+namespace Twitsup\Domain\Model\Tweet;
 
 use EventSourcing\Aggregate\Event;
 use EventSourcing\Aggregate\EventCapabilities;
 use Ramsey\Uuid\UuidInterface;
 
-final class MessageCreated implements Event
+final class Tweeted implements Event
 {
     use EventCapabilities;
 

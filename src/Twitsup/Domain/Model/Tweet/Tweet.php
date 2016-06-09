@@ -1,29 +1,28 @@
 <?php
 
-namespace Twitsup\Domain\Model;
+namespace Twitsup\Domain\Model\Tweet;
 
 use EventSourcing\Aggregate\EventSourcingCapabilities;
 use EventSourcing\Aggregate\EventSourcedAggregate;
 use Ramsey\Uuid\UuidInterface;
 
-final class Message implements EventSourcedAggregate
+final class Tweet implements EventSourcedAggregate
 {
     use EventSourcingCapabilities;
 
     private $text;
     private $id;
 
-    public static function createWithText(UuidInterface $id, $text)
+    public static function createWithText(UuidInterface $id, string $text) : Tweet
     {
         $instance = new static();
-        $instance->recordThat(new MessageCreated($id, $text));
+        $instance->recordThat(new Tweeted($id, $text));
 
         return $instance;
     }
     
-    public function whenMessageCreated(MessageCreated $event)
+    private function whenTweeted(Tweeted $event)
     {
         $this->id = $event->id();
-        $this->text = $event->text();
     }
 }

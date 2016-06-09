@@ -6,7 +6,7 @@ use JamesMoss\Flywheel\Config;
 use JamesMoss\Flywheel\Document;
 use JamesMoss\Flywheel\Repository;
 
-final class AllMessagesListRepository
+final class AllTweetsListRepository
 {
     public function __construct($databasePath)
     {

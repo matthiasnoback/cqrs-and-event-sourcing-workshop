@@ -1,21 +1,29 @@
 <?php
 
 namespace {
-    use EventSourcing\EventStore\EventStore;
+
+    use EventSourcing\Aggregate\Repository\EventSourcedAggregateRepository;
     use Ramsey\Uuid\Uuid;
-    use Twitsup\Domain\Model\Message;
+    use Twitsup\Domain\Model\Tweet\Tweet;
+    use Twitsup\Domain\Model\User\User;
 
     require __DIR__ . '/vendor/autoload.php';
-    
+
     $container = require __DIR__ . '/app/container.php';
     
-    $eventStore = $container->get(EventStore::class);
-    /** @var $eventStore EventStore */
+    $user = User::register(Uuid::uuid4(), 'matthiasnoback', 'Matthias Noback');
+    /** @var EventSourcedAggregateRepository $userRepository */
+    $userRepository = $container->get('Twitsup\Domain\Model\UserRepository');
+    $userRepository->save($user);
 
-    $message = Message::createWithText(Uuid::uuid4(), 'The text of the message');
+    $tweet = Tweet::createWithText(Uuid::uuid4(), 'The text of the message');
 
-    $eventStore->append(Message::class, (string) $message->id(), $message->popRecordedEvents());
+    /** @var EventSourcedAggregateRepository $tweetRepository */
+    $tweetRepository = $container->get('Twitsup\Domain\Model\MessageRepository');
 
-    $message = $eventStore->reconstitute(Message::class, (string) $message->id());
-    print_r($message);
+    $tweetRepository->save($tweet);
+
+    $reconstitutedTweet = $tweetRepository->getById((string) $tweet->id());
+
+    print_r($reconstitutedTweet);
 }

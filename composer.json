@@ -3,7 +3,8 @@
         "ramsey/uuid": "^3.4",
         "beberlei/assert": "^2.5",
         "jamesmoss/flywheel": "^0.5.1",
-        "xtreamwayz/pimple-container-interop": "^1.0"
+        "xtreamwayz/pimple-container-interop": "^1.0",
+        "graphaware/neo4j-php-client": "^4.4"
     },
     "autoload": {
         "psr-4": {

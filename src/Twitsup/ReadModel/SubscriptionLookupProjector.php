@@ -2,7 +2,7 @@
 
 namespace Twitsup\ReadModel;
 
-use Twitsup\Domain\Model\User\UserRegistered;
+use Twitsup\Domain\Model\Subscription\UserStartedFollowing;
 
 class SubscriptionLookupProjector
 {
@@ -11,16 +11,17 @@ class SubscriptionLookupProjector
      */
     private $repository;
 
-    public function __construct(UserLookupRepository $repository)
+    public function __construct(SubscriptionLookupRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function __invoke(UserRegistered $event)
+    public function __invoke(UserStartedFollowing $event)
     {
         $this->repository->save([
-            'id' => (string)$event->id(),
-            'username' => (string)$event->username()
+            'id' => (string)$event->subscriptionId(),
+            'followerId' => (string)$event->followerId(),
+            'followeeId' => (string)$event->followeeId()
         ]);
     }
 }

@@ -9,7 +9,12 @@ use Twitsup\Application\FollowUserHandler;
 use Twitsup\Application\RegisterUserHandler;
 use Twitsup\Application\SendTweetHandler;
 use Twitsup\Domain\Model\Subscription\Subscription;
+use Twitsup\Domain\Model\Subscription\UserFollowed;
+use Twitsup\Domain\Model\Subscription\UserStartedFollowing;
+use Twitsup\Domain\Model\Subscription\UserUnfollowed;
 use Twitsup\Domain\Model\User\UserRegistered;
+use Twitsup\ReadModel\FollowersProjector;
+use Twitsup\ReadModel\FollowersRepository;
 use Twitsup\ReadModel\SubscriptionLookupProjector;
 use Twitsup\ReadModel\SubscriptionLookupRepository;
 use Twitsup\ReadModel\UserLookupProjector;
@@ -33,6 +38,13 @@ $container[EventDispatcher::class] = function ($container) {
     $eventDispatcher = new EventDispatcher();
 
     $eventDispatcher->on(UserRegistered::class, $container[UserLookupProjector::class]);
+    
+    $eventDispatcher->on(UserStartedFollowing::class, $container[SubscriptionLookupProjector::class]);
+
+    $followersProjector = $container[FollowersProjector::class];
+    $eventDispatcher->on(UserStartedFollowing::class, [$followersProjector, 'onUserStartedFollowing']);
+    $eventDispatcher->on(UserFollowed::class, [$followersProjector, 'onUserFollowed']);
+    $eventDispatcher->on(UserUnfollowed::class, [$followersProjector, 'onUserUnfollowed']);
 
     return $eventDispatcher;
 };
@@ -83,6 +95,13 @@ $container[SubscriptionLookupProjector::class] = function ($container) {
     return new SubscriptionLookupProjector($container[SubscriptionLookupRepository::class]);
 };
 
+$container[FollowersRepository::class] = function () {
+    return new FollowersRepository();
+};
+$container[FollowersProjector::class] = function ($container) {
+    return new FollowersProjector($container[FollowersRepository::class]);
+};
+
 /*
  * Application services
  */
@@ -94,7 +113,7 @@ $container[SendTweetHandler::class] = function ($container) {
 };
 $container[FollowUserHandler::class] = function ($container) {
     return new FollowUserHandler(
-        $container[SubscriptionLookupRepository::class],
+        $container[UserLookupRepository::class],
         $container[SubscriptionLookupRepository::class],
         $container['Twitsup\Domain\Model\SubscriptionRepository']
     );

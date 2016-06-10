@@ -10,10 +10,9 @@ final class Tweet implements EventSourcedAggregate
 {
     use EventSourcingCapabilities;
 
-    private $text;
     private $id;
 
-    public static function createWithText(UuidInterface $id, string $text) : Tweet
+    public static function send(UuidInterface $id, string $text) : Tweet
     {
         $instance = new static();
         $instance->recordThat(new Tweeted($id, $text));

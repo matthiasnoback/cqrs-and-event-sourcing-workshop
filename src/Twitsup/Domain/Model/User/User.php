@@ -10,7 +10,7 @@ final class User implements EventSourcedAggregate
 {
     use EventSourcingCapabilities;
 
-    public static function register(UuidInterface $id, string $username, string $nickname)
+    public static function register(UuidInterface $id, string $username, string $nickname) : User
     {
         $instance = new static();
         $instance->recordThat(new UserRegistered($id, $username, $nickname));

@@ -4,14 +4,14 @@ namespace Twitsup\ReadModel;
 
 use Twitsup\Domain\Model\User\UserRegistered;
 
-class UserLookupTableProjector
+class SubscriptionLookupProjector
 {
     /**
-     * @var UserLookupTableRepository
+     * @var UserLookupRepository
      */
     private $repository;
 
-    public function __construct(UserLookupTableRepository $repository)
+    public function __construct(UserLookupRepository $repository)
     {
         $this->repository = $repository;
     }

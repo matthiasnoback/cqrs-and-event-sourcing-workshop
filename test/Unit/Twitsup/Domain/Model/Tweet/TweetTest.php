@@ -16,7 +16,7 @@ class TweetTest extends \PHPUnit_Framework_TestCase
     {
         $id = Uuid::uuid4();
         $text = 'The text';
-        $tweet = Tweet::createWithText($id, $text);
+        $tweet = Tweet::send($id, $text);
 
         $this->assertThat([new Tweeted($id, $text)], new RecordedEventsEqual($tweet));
     }

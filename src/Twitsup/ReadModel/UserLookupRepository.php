@@ -6,7 +6,7 @@ use JamesMoss\Flywheel\Config;
 use JamesMoss\Flywheel\Document;
 use JamesMoss\Flywheel\Repository;
 
-final class UserLookupTableRepository
+final class UserLookupRepository
 {
     public function __construct($databasePath)
     {

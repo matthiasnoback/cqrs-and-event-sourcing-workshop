@@ -2,28 +2,27 @@
 
 namespace {
 
-    use EventSourcing\Aggregate\Repository\EventSourcedAggregateRepository;
     use Ramsey\Uuid\Uuid;
-    use Twitsup\Domain\Model\Tweet\Tweet;
-    use Twitsup\Domain\Model\User\User;
+    use Twitsup\Application\RegisterUser;
+    use Twitsup\Application\RegisterUserHandler;
+    use Twitsup\Application\SendTweet;
+    use Twitsup\Application\SendTweetHandler;
 
     require __DIR__ . '/vendor/autoload.php';
 
     $container = require __DIR__ . '/app/container.php';
-    
-    $user = User::register(Uuid::uuid4(), 'matthiasnoback', 'Matthias Noback');
-    /** @var EventSourcedAggregateRepository $userRepository */
-    $userRepository = $container->get('Twitsup\Domain\Model\UserRepository');
-    $userRepository->save($user);
 
-    $tweet = Tweet::createWithText(Uuid::uuid4(), 'The text of the message');
+    $registerUserHandler = $container[RegisterUserHandler::class];
+    $registerUser = new RegisterUser();
+    $registerUser->id = (string)Uuid::uuid4();
+    $registerUser->username = 'matthiasnoback';
+    $registerUser->nickname = 'Matthias Noback';
+    $registerUserHandler($registerUser);
 
-    /** @var EventSourcedAggregateRepository $tweetRepository */
-    $tweetRepository = $container->get('Twitsup\Domain\Model\MessageRepository');
+    $sendTweetHandler = $container[SendTweetHandler::class];
+    $sendTweet = new SendTweet();
+    $sendTweet->userId = $registerUser->id;
+    $sendTweet->text = 'The text of the message';
 
-    $tweetRepository->save($tweet);
-
-    $reconstitutedTweet = $tweetRepository->getById((string) $tweet->id());
-
-    print_r($reconstitutedTweet);
+    $sendTweetHandler($sendTweet);
 }

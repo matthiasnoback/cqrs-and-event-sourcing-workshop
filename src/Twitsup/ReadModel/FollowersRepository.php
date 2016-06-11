@@ -2,15 +2,18 @@
 
 namespace Twitsup\ReadModel;
 
-use GraphAware\Neo4j\Client\ClientBuilder;
+use GraphAware\Neo4j\Client\Client;
 
 final class FollowersRepository
 {
-    public function __construct()
+    /**
+     * @var Client
+     */
+    private $client;
+
+    public function __construct(Client $client)
     {
-        $this->client = ClientBuilder::create()
-            ->addConnection('default', 'http://neo4j:neo4j@localhost:7474')
-            ->build();
+        $this->client = $client;
     }
 
     /**

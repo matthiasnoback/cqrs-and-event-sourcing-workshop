@@ -5,6 +5,8 @@ use EventSourcing\EventStore\EventStore;
 use EventSourcing\EventStore\Storage\FlywheelStorageFacility;
 use EventSourcing\EventStore\StorageFacility;
 use EventSourcing\Projection\EventDispatcher;
+use GraphAware\Neo4j\Client\Client;
+use GraphAware\Neo4j\Client\ClientBuilder;
 use Twitsup\Application\FollowUserHandler;
 use Twitsup\Application\RegisterUserHandler;
 use Twitsup\Application\SendTweetHandler;
@@ -27,7 +29,8 @@ use Twitsup\ReadModel\UserProfileRepository;
 use Xtreamwayz\Pimple\Container;
 
 $config = [
-    'database_path' => realpath(__DIR__ . '/../var')
+    'database_path' => realpath(__DIR__ . '/../var'),
+    'neo4j_password' => 'neo4j'
 ];
 
 $container = new Container();
@@ -90,6 +93,15 @@ $container['Twitsup\Domain\Model\SubscriptionRepository'] = function ($container
 /*
  * Read model
  */
+$container[Client::class] = function () use ($config) {
+    return ClientBuilder::create()
+        ->addConnection('default', sprintf(
+            'http://neo4j:%s@localhost:7474',
+            $config['neo4j_password']
+        ))
+        ->build();
+};
+
 $container[UserLookupRepository::class] = function () use ($config) {
     return new UserLookupRepository($config['database_path']);
 };
@@ -111,8 +123,8 @@ $container[SubscriptionLookupProjector::class] = function ($container) {
     return new SubscriptionLookupProjector($container[SubscriptionLookupRepository::class]);
 };
 
-$container[FollowersRepository::class] = function () {
-    return new FollowersRepository();
+$container[FollowersRepository::class] = function ($container) {
+    return new FollowersRepository($container[GraphAware\Neo4j\Client\Client::class]);
 };
 $container[FollowersProjector::class] = function ($container) {
     return new FollowersProjector($container[FollowersRepository::class]);

@@ -12,16 +12,16 @@ final class Tweet implements EventSourcedAggregate
 
     private $id;
 
-    public static function send(UuidInterface $id, string $text) : Tweet
+    public static function send(UuidInterface $tweetId, UuidInterface $userId, string $text) : Tweet
     {
         $instance = new static();
-        $instance->recordThat(new Tweeted($id, $text));
+        $instance->recordThat(new Tweeted($tweetId, $userId, $text));
 
         return $instance;
     }
     
     private function whenTweeted(Tweeted $event)
     {
-        $this->id = $event->id();
+        $this->id = $event->tweetId();
     }
 }

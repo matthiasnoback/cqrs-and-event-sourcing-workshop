@@ -15,17 +15,17 @@ namespace {
     $container = require __DIR__ . '/app/container.php';
 
     $registerUserHandler = $container[RegisterUserHandler::class];
-    $registerUser = new RegisterUser();
-    $registerUser->id = (string)Uuid::uuid4();
-    $registerUser->username = 'matthiasnoback';
-    $registerUser->nickname = 'Matthias Noback';
-    $registerUserHandler($registerUser);
+    $registerUser1 = new RegisterUser();
+    $registerUser1->id = (string)Uuid::uuid4();
+    $registerUser1->username = 'matthiasnoback';
+    $registerUser1->nickname = 'Matthias Noback';
+    $registerUserHandler($registerUser1);
 
-    $registerUser = new RegisterUser();
-    $registerUser->id = (string)Uuid::uuid4();
-    $registerUser->username = 'mennobacker';
-    $registerUser->nickname = 'Menno Backer';
-    $registerUserHandler($registerUser);
+    $registerUser2 = new RegisterUser();
+    $registerUser2->id = (string)Uuid::uuid4();
+    $registerUser2->username = 'mennobacker';
+    $registerUser2->nickname = 'Menno Backer';
+    $registerUserHandler($registerUser2);
 
     $followUser = new FollowUser();
     $followUser->followerUsername = 'matthiasnoback';
@@ -35,7 +35,7 @@ namespace {
 
     $sendTweetHandler = $container[SendTweetHandler::class];
     $sendTweet = new SendTweet();
-    $sendTweet->userId = $registerUser->id;
+    $sendTweet->userId = $registerUser2->id;
     $sendTweet->text = 'The text of the message';
 
     $sendTweetHandler($sendTweet);

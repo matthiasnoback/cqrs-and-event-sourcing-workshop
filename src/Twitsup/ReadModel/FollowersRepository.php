@@ -21,7 +21,7 @@ final class FollowersRepository
     {
         /** @var $result \GraphAware\Bolt\Result\Result */
         $result = $this->client->run(
-            'MATCH (follower:User)-[:FOLLOWS]->(followee:Person { user_id: {followeeId} ) RETURN follower',
+            'MATCH (follower:User)-[:FOLLOWS]->(followee:User { user_id: {followeeId} }) RETURN follower.user_id as user_id',
             [
                 'followeeId' => $followeeId
             ]

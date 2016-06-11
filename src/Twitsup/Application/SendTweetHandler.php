@@ -20,7 +20,7 @@ final class SendTweetHandler
 
     public function __invoke(SendTweet $command)
     {
-        $tweet = Tweet::send(Uuid::uuid4(), $command->text);
+        $tweet = Tweet::send(Uuid::uuid4(), Uuid::fromString($command->userId), $command->text);
 
         $this->repository->save($tweet);
     }

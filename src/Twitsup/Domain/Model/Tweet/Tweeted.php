@@ -13,25 +13,39 @@ final class Tweeted implements Event
     /**
      * @var UuidInterface
      */
-    private $id;
+    private $tweetId;
+
+    /**
+     * @var UuidInterface
+     */
+    private $userId;
 
     /**
      * @var string
      */
     private $text;
 
+    public function __construct(UuidInterface $tweetId, UuidInterface $userId, string $text)
+    {
+        $this->tweetId = $tweetId;
+        $this->userId = $userId;
+        $this->text = $text;
+    }
+
     /**
      * @return UuidInterface
      */
-    public function id() : UuidInterface
+    public function tweetId() : UuidInterface
     {
-        return $this->id;
+        return $this->tweetId;
     }
 
-    public function __construct(UuidInterface $id, string $text)
+    /**
+     * @return UuidInterface
+     */
+    public function userId()
     {
-        $this->text = $text;
-        $this->id = $id;
+        return $this->userId;
     }
 
     public function text() : string

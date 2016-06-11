@@ -6,13 +6,11 @@ use JamesMoss\Flywheel\Config;
 use JamesMoss\Flywheel\Document;
 use JamesMoss\Flywheel\Repository;
 
-final class UserLookupRepository
+final class UserProfileRepository
 {
-    private $repository;
-
     public function __construct($databasePath)
     {
-        $this->repository = new Repository('user_lookup_table', new Config($databasePath));
+        $this->repository = new Repository('user_profile', new Config($databasePath));
     }
 
     public function save(array $data)
@@ -22,17 +20,17 @@ final class UserLookupRepository
         $this->repository->store($document);
     }
 
-    public function getUserIdForUsername($username)
+    public function getByUserId(string $userId)
     {
         $result = $this->repository->query()
-            ->andWhere('username', '==', $username)
+            ->where('id', '==', $userId)
             ->execute()
             ->first();
 
         if (!$result) {
-            throw new \RuntimeException('User not found');
+            throw new \RuntimeException();
         }
 
-        return $result->id;
+        return get_object_vars($result);
     }
 }

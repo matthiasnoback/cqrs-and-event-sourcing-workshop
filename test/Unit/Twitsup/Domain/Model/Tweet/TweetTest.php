@@ -14,10 +14,11 @@ class TweetTest extends \PHPUnit_Framework_TestCase
      */
     public function a_tweet_can_be_tweeted()
     {
-        $id = Uuid::uuid4();
+        $tweetId = Uuid::uuid4();
+        $userId = Uuid::uuid4();
         $text = 'The text';
-        $tweet = Tweet::send($id, $text);
+        $tweet = Tweet::send($tweetId, $userId, $text);
 
-        $this->assertThat([new Tweeted($id, $text)], new RecordedEventsEqual($tweet));
+        $this->assertThat([new Tweeted($tweetId, $userId, $text)], new RecordedEventsEqual($tweet));
     }
 }

@@ -41,4 +41,9 @@ final class UserRegistered implements Event
     {
         return $this->username;
     }
+
+    public function nickname()
+    {
+        return $this->nickname;
+    }
 }

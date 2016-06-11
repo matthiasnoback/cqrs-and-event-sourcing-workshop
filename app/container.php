@@ -12,13 +12,18 @@ use Twitsup\Domain\Model\Subscription\Subscription;
 use Twitsup\Domain\Model\Subscription\UserFollowed;
 use Twitsup\Domain\Model\Subscription\UserStartedFollowing;
 use Twitsup\Domain\Model\Subscription\UserUnfollowed;
+use Twitsup\Domain\Model\Tweet\Tweeted;
 use Twitsup\Domain\Model\User\UserRegistered;
 use Twitsup\ReadModel\FollowersProjector;
 use Twitsup\ReadModel\FollowersRepository;
+use Twitsup\ReadModel\TimelineProjector;
 use Twitsup\ReadModel\SubscriptionLookupProjector;
 use Twitsup\ReadModel\SubscriptionLookupRepository;
+use Twitsup\ReadModel\TimelineRepository;
 use Twitsup\ReadModel\UserLookupProjector;
 use Twitsup\ReadModel\UserLookupRepository;
+use Twitsup\ReadModel\UserProfileProjector;
+use Twitsup\ReadModel\UserProfileRepository;
 use Xtreamwayz\Pimple\Container;
 
 $config = [
@@ -38,13 +43,17 @@ $container[EventDispatcher::class] = function ($container) {
     $eventDispatcher = new EventDispatcher();
 
     $eventDispatcher->on(UserRegistered::class, $container[UserLookupProjector::class]);
-    
+
+    $eventDispatcher->on(UserRegistered::class, $container[UserProfileProjector::class]);
+
     $eventDispatcher->on(UserStartedFollowing::class, $container[SubscriptionLookupProjector::class]);
 
     $followersProjector = $container[FollowersProjector::class];
     $eventDispatcher->on(UserStartedFollowing::class, [$followersProjector, 'onUserStartedFollowing']);
     $eventDispatcher->on(UserFollowed::class, [$followersProjector, 'onUserFollowed']);
     $eventDispatcher->on(UserUnfollowed::class, [$followersProjector, 'onUserUnfollowed']);
+
+    $eventDispatcher->on(Tweeted::class, $container[TimelineProjector::class]);
 
     return $eventDispatcher;
 };
@@ -88,6 +97,13 @@ $container[UserLookupProjector::class] = function ($container) {
     return new UserLookupProjector($container[UserLookupRepository::class]);
 };
 
+$container[UserProfileRepository::class] = function () use ($config) {
+    return new UserProfileRepository($config['database_path']);
+};
+$container[UserProfileProjector::class] = function ($container) {
+    return new UserProfileProjector($container[UserProfileRepository::class]);
+};
+
 $container[SubscriptionLookupRepository::class] = function () use ($config) {
     return new SubscriptionLookupRepository($config['database_path']);
 };
@@ -100,6 +116,17 @@ $container[FollowersRepository::class] = function () {
 };
 $container[FollowersProjector::class] = function ($container) {
     return new FollowersProjector($container[FollowersRepository::class]);
+};
+
+$container[TimelineRepository::class] = function () use ($config) {
+    return new TimelineRepository($config['database_path']);
+};
+$container[TimelineProjector::class] = function ($container) {
+    return new TimelineProjector(
+        $container[FollowersRepository::class],
+        $container[UserProfileRepository::class],
+        $container[TimelineRepository::class]
+    );
 };
 
 /*

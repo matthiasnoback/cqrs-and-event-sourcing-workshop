@@ -25,3 +25,19 @@ To see if the "code" works:
     php sandbox.php
 
 Furthermore you might like to explode the Neo4j web interface, by going to [http://192.168.44.55:7474](http://192.168.44.55:7474) in a web browser.
+
+## Neo4j web browser
+
+To connect:
+
+    :server connect
+
+In case you get some security warning, etc.:
+
+    :server change-password
+
+Follow the instructions. Copy the password to `app/container.php`.
+
+To show everything that is in the database:
+
+    MATCH (u) RETURN (u)

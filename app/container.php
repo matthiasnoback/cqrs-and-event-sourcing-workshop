@@ -16,6 +16,9 @@ use Twitsup\Domain\Model\Subscription\UserStartedFollowing;
 use Twitsup\Domain\Model\Subscription\UserUnfollowed;
 use Twitsup\Domain\Model\Tweet\Tweeted;
 use Twitsup\Domain\Model\User\UserRegistered;
+use Twitsup\Ports\Cli\FollowUserCliHandler;
+use Twitsup\Ports\Cli\RegisterUserCliHandler;
+use Twitsup\Ports\Cli\SendTweetCliHandler;
 use Twitsup\ReadModel\FollowersProjector;
 use Twitsup\ReadModel\FollowersRepository;
 use Twitsup\ReadModel\TimelineProjector;
@@ -156,6 +159,19 @@ $container[FollowUserHandler::class] = function ($container) {
         $container[SubscriptionLookupRepository::class],
         $container['Twitsup\Domain\Model\SubscriptionRepository']
     );
+};
+
+/*
+ * Port: CLI
+ */
+$container[SendTweetCliHandler::class] = function ($container) {
+    return new SendTweetCliHandler($container[SendTweetHandler::class], $container[UserLookupRepository::class]);
+};
+$container[RegisterUserCliHandler::class] = function ($container) {
+    return new RegisterUserCliHandler($container[RegisterUserHandler::class]);
+};
+$container[FollowUserCliHandler::class] = function ($container) {
+    return new FollowUserCliHandler($container[FollowUserHandler::class]);
 };
 
 return $container;

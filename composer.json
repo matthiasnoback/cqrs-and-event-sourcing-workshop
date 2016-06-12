@@ -4,7 +4,8 @@
         "beberlei/assert": "^2.5",
         "jamesmoss/flywheel": "^0.5.1",
         "xtreamwayz/pimple-container-interop": "^1.0",
-        "graphaware/neo4j-php-client": "^4.4"
+        "graphaware/neo4j-php-client": "^4.4",
+        "webmozart/console": "@dev"
     },
     "autoload": {
         "psr-4": {

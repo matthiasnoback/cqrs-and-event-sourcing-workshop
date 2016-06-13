@@ -20,6 +20,7 @@ use Twitsup\Ports\Cli\FollowUserCliHandler;
 use Twitsup\Ports\Cli\RegisterUserCliHandler;
 use Twitsup\Ports\Cli\ReplayHistoryCliHandler;
 use Twitsup\Ports\Cli\SendTweetCliHandler;
+use Twitsup\Ports\Cli\ShowTimelineCliHandler;
 use Twitsup\ReadModel\FollowersProjector;
 use Twitsup\ReadModel\FollowersRepository;
 use Twitsup\ReadModel\TimelineProjector;
@@ -176,6 +177,9 @@ $container[RegisterUserCliHandler::class] = function ($container) {
 };
 $container[FollowUserCliHandler::class] = function ($container) {
     return new FollowUserCliHandler($container[FollowUserHandler::class]);
+};
+$container[ShowTimelineCliHandler::class] = function ($container) {
+    return new ShowTimelineCliHandler($container[UserLookupRepository::class], $container[TimelineRepository::class]);
 };
 $container[ReplayHistoryCliHandler::class] = function ($container) {
     return new ReplayHistoryCliHandler(

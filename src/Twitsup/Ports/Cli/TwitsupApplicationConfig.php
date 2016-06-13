@@ -62,6 +62,13 @@ class TwitsupApplicationConfig extends DefaultApplicationConfig
                     return $this->container->get(SendTweetCliHandler::class);
                 })
             ->end()
+            ->beginCommand('timeline')
+                ->setDescription('Show the timeline of a user')
+                ->addArgument('username', Argument::REQUIRED, 'Name')
+                ->setHandler(function () {
+                    return $this->container->get(ShowTimelineCliHandler::class);
+                })
+            ->end()
         ;
     }
 }

@@ -1,0 +1,6 @@
+default:
+    suites:
+        acceptance:
+            paths: [ "%paths.base%/test/acceptance/features"]
+            contexts:
+                - Test\Acceptance\TwitsupContext

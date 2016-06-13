@@ -35,4 +35,14 @@ final class UserLookupRepository
 
         return $result->id;
     }
+
+    public function userWithUsernameExists(string $username)
+    {
+        $result = $this->repository->query()
+            ->andWhere('username', '==', $username)
+            ->execute()
+            ->first();
+
+        return $result !== false;
+    }
 }

@@ -14,8 +14,7 @@ final class TimelineRepository
 
     public function addToTimeline(string $followerId, array $userProfile, string $text, \DateTimeImmutable $tweetedAt)
     {
-        $timelineFilePath = $this->databasePath . '/' . $followerId . '.timeline';
-        touch($timelineFilePath);
+        $timelineFilePath = $this->timelineFilePathForUser($followerId);
 
         $handle = fopen($timelineFilePath, 'a+');
         fwrite($handle, sprintf(
@@ -26,5 +25,24 @@ final class TimelineRepository
             $text
         ));
         fclose($handle);
+    }
+
+    public function timelineFor(string $userId) : string
+    {
+        return file_get_contents($this->timelineFilePathForUser($userId));
+    }
+
+    /**
+     * @param string $userId
+     * @return string
+     */
+    private function timelineFilePathForUser(string $userId) : string
+    {
+        $timelineFilePath = $this->databasePath . '/' . $userId . '.timeline';
+
+        // in case the file doesn't exist yet
+        touch($timelineFilePath);
+
+        return $timelineFilePath;
     }
 }

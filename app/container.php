@@ -149,7 +149,10 @@ $container[TimelineProjector::class] = function ($container) {
  * Application services
  */
 $container[RegisterUserHandler::class] = function ($container) {
-    return new RegisterUserHandler($container['Twitsup\Domain\Model\UserRepository']);
+    return new RegisterUserHandler(
+        $container['Twitsup\Domain\Model\UserRepository'],
+        $container[UserLookupRepository::class]
+    );
 };
 $container[SendTweetHandler::class] = function ($container) {
     return new SendTweetHandler($container['Twitsup\Domain\Model\TweetRepository']);

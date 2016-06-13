@@ -39,5 +39,8 @@
   template: src=neo4j.conf dest=/etc/neo4j/neo4j.conf owner=neo4j group=adm mode=0644
   notify: Restart Neo4j
 
+- name: Set username and password
+  template: src=auth dest=/var/lib/neo4j/data/dbms/auth owner=neo4j group=adm mode=0644
+
 - name: Ensure Neo4j is enabled and started
   service: name=neo4j enabled=yes state=started

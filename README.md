@@ -32,12 +32,6 @@ To connect:
 
     :server connect
 
-In case you get some security warning, etc.:
-
-    :server change-password
-
-Follow the instructions. Copy the password to `app/container.php`.
-
 To show everything that is in the database:
 
     MATCH (u) RETURN (u)

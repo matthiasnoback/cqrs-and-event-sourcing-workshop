@@ -8,7 +8,6 @@ use Twitsup\Domain\Model\Subscription\AUserCanNotFollowThemselves;
 use Twitsup\Domain\Model\Subscription\Subscription;
 use Twitsup\Domain\Model\Subscription\UserFollowed;
 use Twitsup\Domain\Model\Subscription\UserStartedFollowing;
-use Twitsup\Domain\Model\Subscription\UserUnfollowed;
 
 final class SubscriptionTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,6 +43,8 @@ final class SubscriptionTest extends \PHPUnit_Framework_TestCase
      */
     public function a_user_can_be_unfollowed()
     {
+        $this->markTestIncomplete('Unfollowing needs to be implemented');
+
         $subscriptionId = Uuid::uuid4();
         $followerId = Uuid::uuid4();
         $followeeId = Uuid::uuid4();
@@ -62,6 +63,8 @@ final class SubscriptionTest extends \PHPUnit_Framework_TestCase
      */
     public function a_user_can_be_followed_again()
     {
+        $this->markTestIncomplete('Unfollowing needs to be implemented');
+        
         $subscriptionId = Uuid::uuid4();
         $followerId = Uuid::uuid4();
         $followeeId = Uuid::uuid4();

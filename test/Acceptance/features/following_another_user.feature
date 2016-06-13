@@ -9,3 +9,11 @@ Feature:
     When I follow ericcartman
     And ericcartman tweets "Screw you guys, I'm going home."
     Then I see on my timeline: "Screw you guys, I'm going home."
+
+  @wip
+  Scenario: Unfollow someone and don't see new tweets appear in the timeline
+    Given I've registered myself as matthiasnoback ("Matthias Noback")
+    And I follow ericcartman ("Eric Cartman")
+    When I unfollow ericcartman
+    And ericcartman tweets "Respect my authority."
+    Then I don't see on my timeline: "Respect my authority."

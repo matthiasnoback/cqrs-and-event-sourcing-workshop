@@ -13,7 +13,6 @@ use Twitsup\Application\SendTweetHandler;
 use Twitsup\Domain\Model\Subscription\Subscription;
 use Twitsup\Domain\Model\Subscription\UserFollowed;
 use Twitsup\Domain\Model\Subscription\UserStartedFollowing;
-use Twitsup\Domain\Model\Subscription\UserUnfollowed;
 use Twitsup\Domain\Model\Tweet\Tweeted;
 use Twitsup\Domain\Model\User\UserRegistered;
 use Twitsup\Ports\Cli\FollowUserCliHandler;
@@ -59,7 +58,6 @@ $container[EventDispatcher::class] = function ($container) {
     $followersProjector = $container[FollowersProjector::class];
     $eventDispatcher->on(UserStartedFollowing::class, [$followersProjector, 'onUserStartedFollowing']);
     $eventDispatcher->on(UserFollowed::class, [$followersProjector, 'onUserFollowed']);
-    $eventDispatcher->on(UserUnfollowed::class, [$followersProjector, 'onUserUnfollowed']);
 
     $eventDispatcher->on(Tweeted::class, $container[TimelineProjector::class]);
 

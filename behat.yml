@@ -1,4 +1,7 @@
 default:
+    gherkin:
+        filters:
+            tags: "~@wip"
     suites:
         acceptance:
             paths: [ "%paths.base%/test/acceptance/features"]

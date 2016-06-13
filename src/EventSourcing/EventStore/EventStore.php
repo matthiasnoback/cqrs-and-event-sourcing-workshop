@@ -51,6 +51,19 @@ final class EventStore
         }
     }
 
+    /**
+     * Load all historic events and dispatch them to the provided EventDispatcher.
+     *
+     * @param EventDispatcher $eventDispatcher
+     */
+    public function replayHistory(EventDispatcher $eventDispatcher)
+    {
+        $allEvents = $this->storageFacility->loadAllRawEvents();
+        foreach ($allEvents as $rawEvent) {
+            $eventDispatcher->dispatch($this->restoreEvent($rawEvent));
+        }
+    }
+
     public function reconstitute($aggregateType, $aggregateId)
     {
         return call_user_func([$aggregateType, 'reconstitute'], $this->loadEvents($aggregateType, $aggregateId));

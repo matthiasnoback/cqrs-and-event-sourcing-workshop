@@ -41,7 +41,7 @@ final class FollowersRepository
         $this->client->run(
             <<<EOD
 MATCH (follower:User { user_id: {followerId} }), (followee:User { user_id: {followeeId} })
-CREATE (follower)-[r:FOLLOWS]->(followee)
+MERGE (follower)-[r:FOLLOWS]->(followee)
 EOD
             , [
                 'followerId' => $followerId,

@@ -18,6 +18,7 @@ use Twitsup\Domain\Model\Tweet\Tweeted;
 use Twitsup\Domain\Model\User\UserRegistered;
 use Twitsup\Ports\Cli\FollowUserCliHandler;
 use Twitsup\Ports\Cli\RegisterUserCliHandler;
+use Twitsup\Ports\Cli\ReplayHistoryCliHandler;
 use Twitsup\Ports\Cli\SendTweetCliHandler;
 use Twitsup\ReadModel\FollowersProjector;
 use Twitsup\ReadModel\FollowersRepository;
@@ -172,6 +173,12 @@ $container[RegisterUserCliHandler::class] = function ($container) {
 };
 $container[FollowUserCliHandler::class] = function ($container) {
     return new FollowUserCliHandler($container[FollowUserHandler::class]);
+};
+$container[ReplayHistoryCliHandler::class] = function ($container) {
+    return new ReplayHistoryCliHandler(
+        $container[EventStore::class],
+        $container[EventDispatcher::class]
+    );
 };
 
 return $container;

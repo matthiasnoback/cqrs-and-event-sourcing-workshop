@@ -30,6 +30,14 @@ class TwitsupApplicationConfig extends DefaultApplicationConfig
             ->setVersion('1.0.0')
             ->addStyle(Style::tag('success')->fgGreen())
             ->addStyle(Style::tag('data')->fgYellow())
+            ->beginCommand('system')
+                ->beginSubCommand('replay-history')
+                    ->setDescription('Replay the history of events')
+                    ->setHandler(function () {
+                        return $this->container->get(ReplayHistoryCliHandler::class);
+                    })
+                ->end()
+            ->end()
             ->beginCommand('register-user')
                 ->setDescription('Register a new user')
                 ->addArgument('username', Argument::REQUIRED, 'Username')

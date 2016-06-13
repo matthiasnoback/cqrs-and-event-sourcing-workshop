@@ -2,6 +2,7 @@
 
 namespace EventSourcing\EventStore\Storage;
 
+use EventSourcing\Aggregate\Event;
 use EventSourcing\EventStore\StorageFacility;
 use JamesMoss\Flywheel\Config;
 use JamesMoss\Flywheel\Document;
@@ -29,6 +30,18 @@ final class FlywheelStorageFacility implements StorageFacility
         $documents = $this->repository->query()
             ->andWhere('aggregate_type', '==', $aggregateType)
             ->andWhere('aggregate_id', '==', $aggregateId)
+            ->orderBy('created_at ASC')
+            ->execute()
+        ;
+
+        foreach ($documents as $document) {
+            yield get_object_vars($document);
+        }
+    }
+
+    public function loadAllRawEvents()
+    {
+        $documents = $this->repository->query()
             ->orderBy('created_at ASC')
             ->execute()
         ;

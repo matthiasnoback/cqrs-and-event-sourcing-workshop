@@ -28,9 +28,16 @@ final class UserProfileRepository
             ->first();
 
         if (!$result) {
-            throw new \RuntimeException();
+            throw new \RuntimeException('User not found');
         }
 
         return get_object_vars($result);
+    }
+
+    public function reset()
+    {
+        foreach ($this->repository->getAllFiles() as $file) {
+            unlink($file);
+        }
     }
 }

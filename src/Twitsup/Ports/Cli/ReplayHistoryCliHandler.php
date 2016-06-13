@@ -18,16 +18,27 @@ final class ReplayHistoryCliHandler
      * @var EventDispatcher
      */
     private $eventDispatcher;
+    /**
+     * @var array
+     */
+    private $readModelRepositories;
 
-    public function __construct(EventStore $eventStore, EventDispatcher $eventDispatcher)
+    public function __construct(EventStore $eventStore, EventDispatcher $eventDispatcher, array $readModelRepositories)
     {
         $this->eventStore = $eventStore;
         $this->eventDispatcher = $eventDispatcher;
+        $this->readModelRepositories = $readModelRepositories;
     }
 
     public function handle(Args $args, IO $io)
     {
-        $io->writeLine('Replaying history...');
+        $io->writeLine('Reset read models...');
+
+        foreach ($this->readModelRepositories as $readModelRepository) {
+            $readModelRepository->reset();
+        }
+
+        $io->writeLine('Replay history...');
 
         $this->eventStore->replayHistory($this->eventDispatcher);
 

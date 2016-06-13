@@ -45,4 +45,11 @@ final class UserLookupRepository
 
         return $result !== false;
     }
+
+    public function reset()
+    {
+        foreach ($this->repository->getAllFiles() as $file) {
+            unlink($file);
+        }
+    }
 }

@@ -8,6 +8,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use EventSourcing\EventStore\StorageFacility;
 use Ramsey\Uuid\Uuid;
 use Twitsup\Application\FollowUser;
 use Twitsup\Application\FollowUserHandler;
@@ -35,6 +36,17 @@ class TwitsupContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->container = require __DIR__ . '/../../app/container.php';
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function cleanUp()
+    {
+        foreach ($this->container['read_model_repositories'] as $repository) {
+            $repository->reset();
+        }
+        $this->container[StorageFacility::class]->reset();
     }
 
     /**

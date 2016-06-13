@@ -38,11 +38,35 @@ final class TimelineRepository
      */
     private function timelineFilePathForUser(string $userId) : string
     {
-        $timelineFilePath = $this->databasePath . '/' . $userId . '.timeline';
+        $timelineFilePath = $this->databaseDirectory() . '/' . $userId . '.txt';
 
         // in case the file doesn't exist yet
         touch($timelineFilePath);
 
         return $timelineFilePath;
+    }
+
+    public function reset()
+    {
+        foreach (scandir($this->databaseDirectory()) as $file) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            unlink($this->databaseDirectory() . '/' . $file);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    private function databaseDirectory()
+    {
+        $directory = $this->databasePath . '/timeline';
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        return $directory;
     }
 }

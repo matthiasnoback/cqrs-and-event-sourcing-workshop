@@ -34,4 +34,11 @@ final class SubscriptionLookupRepository
 
         return $result->id;
     }
+
+    public function reset()
+    {
+        foreach ($this->repository->getAllFiles() as $file) {
+            unlink($file);
+        }
+    }
 }

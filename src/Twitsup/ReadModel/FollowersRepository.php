@@ -82,4 +82,9 @@ EOD
         );
         $this->client->runStack($stack);
     }
+
+    public function reset()
+    {
+        $this->client->run('MATCH (u) DETACH DELETE u');
+    }
 }

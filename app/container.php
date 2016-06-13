@@ -50,9 +50,9 @@ $container[StorageFacility::class] = function () use ($config) {
 $container[EventDispatcher::class] = function ($container) {
     $eventDispatcher = new EventDispatcher();
 
-    $eventDispatcher->on(UserRegistered::class, $container[UserLookupProjector::class]);
-
     $eventDispatcher->on(UserRegistered::class, $container[UserProfileProjector::class]);
+
+    $eventDispatcher->on(UserRegistered::class, $container[UserLookupProjector::class]);
 
     $eventDispatcher->on(UserStartedFollowing::class, $container[SubscriptionLookupProjector::class]);
 
@@ -146,6 +146,16 @@ $container[TimelineProjector::class] = function ($container) {
     );
 };
 
+$container['read_model_repositories'] = function($container) {
+    return [
+        $container[UserLookupRepository::class],
+        $container[UserProfileRepository::class],
+        $container[SubscriptionLookupRepository::class],
+        $container[FollowersRepository::class],
+        $container[TimelineRepository::class]
+    ];
+};
+
 /*
  * Application services
  */
@@ -184,7 +194,8 @@ $container[ShowTimelineCliHandler::class] = function ($container) {
 $container[ReplayHistoryCliHandler::class] = function ($container) {
     return new ReplayHistoryCliHandler(
         $container[EventStore::class],
-        $container[EventDispatcher::class]
+        $container[EventDispatcher::class],
+        $container['read_model_repositories']
     );
 };
 

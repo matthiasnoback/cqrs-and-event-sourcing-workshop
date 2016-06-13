@@ -58,4 +58,11 @@ final class FlywheelStorageFacility implements StorageFacility
 
         $this->repository->store($document);
     }
+
+    public function reset()
+    {
+        foreach ($this->repository->getAllFiles() as $file) {
+            unlink($file);
+        }
+    }
 }

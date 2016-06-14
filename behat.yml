@@ -4,6 +4,6 @@ default:
             tags: "~@wip"
     suites:
         acceptance:
-            paths: [ "%paths.base%/test/acceptance/features"]
+            paths: [ "%paths.base%/test/Acceptance/features"]
             contexts:
                 - Test\Acceptance\TwitsupContext

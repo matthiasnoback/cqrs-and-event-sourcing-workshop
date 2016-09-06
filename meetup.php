@@ -4,11 +4,13 @@ use Meetup\Meetup;
 
 require __DIR__ . '/vendor/autoload.php';
 
-function it($m,$p){echo ($p?'✔︎':'✘')." It $m\n"; if(!$p){$GLOBALS['f']=1;}}function done(){if(@$GLOBALS['f'])die(1);}
+function it($m,$p){echo "\033[".($p?"32m✔":"31m✘")." It $m\033[0m\n"; if(!$p)$GLOBALS['f']=1;}function done(){if(@$GLOBALS['f'])die(1);}
+function throws($exp,\Closure $cb){try{$cb();}catch(\Exception $e){return $e instanceof $exp;}return false;}
 
+$id = '1234';
 $date = new \DateTimeImmutable('2016-06-13');
 $title = 'An evening with CQRS';
-$meetup = Meetup::schedule($date, $title);
+$meetup = Meetup::schedule($id, $date, $title);
 
 it('should have the provided title', $meetup->title() == $title);
 it('should be scheduled on the provided date', $meetup->date() == $date);

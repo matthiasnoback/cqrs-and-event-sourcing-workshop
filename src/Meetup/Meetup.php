@@ -4,13 +4,30 @@ namespace Meetup;
 
 final class Meetup
 {
+    /**
+     * @var string
+     */
+    private $id;
+
+    /**
+     * @var \DateTimeInterface
+     */
     private $date;
+
+    /**
+     * @var string
+     */
     private $title;
+
+    /**
+     * @var bool
+     */
     private $cancelled = false;
 
-    public static function schedule(\DateTimeInterface $date, $title)
+    public static function schedule(string $id, \DateTimeInterface $date, string $title) : Meetup
     {
         $meetup = new self();
+        $meetup->id = $id;
         $meetup->date = $date;
         $meetup->title = $title;
 
@@ -30,6 +47,11 @@ final class Meetup
     public function hasBeenCancelled() : bool
     {
         return $this->cancelled;
+    }
+
+    public function id() : string
+    {
+        return $this->id;
     }
 
     public function date() : \DateTimeInterface

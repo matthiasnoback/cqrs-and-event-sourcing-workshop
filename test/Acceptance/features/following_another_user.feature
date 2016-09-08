@@ -13,7 +13,8 @@ Feature:
   @wip
   Scenario: Unfollow someone and don't see new tweets appear in the timeline
     Given I've registered myself as matthiasnoback ("Matthias Noback")
-    And I follow ericcartman ("Eric Cartman")
+    And a user ericcartman ("Eric Cartman") has also registered themselves
+    And I follow ericcartman
     When I unfollow ericcartman
     And ericcartman tweets "Respect my authority."
     Then I don't see on my timeline: "Respect my authority."

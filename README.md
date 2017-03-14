@@ -1,5 +1,10 @@
 # Code and assignments for the "CQRS & Event Sourcing" workshop module
 
+## Requirements
+
+- [Docker Engine](https://docs.docker.com/engine/installation/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
 ## Getting started
 
 - Clone this repository and `cd` into it.

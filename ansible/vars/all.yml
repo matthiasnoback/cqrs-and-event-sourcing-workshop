@@ -1,7 +1,0 @@
----
-server:
-    timezone: Europe/Amsterdam
-    locale: en_US.UTF-8
-    packages: []
-vagrant_local:
-    vm: { base_box: trusty64, hostname: cqrs-workshop, ip: 192.168.44.55, memory: '512', sharedfolder: ./, useVagrantCloud: '1', syncType: nfs }

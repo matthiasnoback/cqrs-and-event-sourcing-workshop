@@ -1,37 +1,23 @@
-# CQRS workshop sandbox
+# Code and assignments for the "CQRS & Event Sourcing" workshop module
 
 ## Getting started
 
-First, clone this project and navigate to the root of the project:
+- Clone this repository and `cd` into it.
+- Run `docker-compose pull`.
+- Run `bin/composer.sh install --prefer-dist` to install the project's dependencies.
+- [Follow the instructions](https://github.com/matthiasnoback/php-workshop-tools/blob/master/README.md) for setting environment variables and configuring PhpStorm for debugging.
 
-    git clone git@github.com:ibuildingsnl/cqrs-workshop-code.git
-    cd cqrs-workshop-code
+## Running development tools
 
-You need:
-
-- Vagrant
-- Ansible
-
-Once you have installed both, run:
-
-    vagrant up
-
-in the root of this project. This may take a while (it seems to compile Java 8 and Neo4j).
-
-To see if the "code" works:
-
-    vagrant ssh
-    cd /vagrant
-    php sandbox.php
-
-Furthermore you might like to explode the Neo4j web interface, by going to [http://192.168.44.55:7474](http://192.168.44.55:7474) in a web browser.
+- Run `bin/composer.sh` to use Composer (e.g. `bin/composer.sh require symfony/var-dumper`).
+- Run `bin/run_tests.sh` to run the tests.
+- Run `bin/sandbox.sh` to run the `sandbox.php` script.
+- Run `bin/twitsup.sh` to run the `twitsup` CLI application.
 
 ## Neo4j web browser
 
-To connect:
+Open [http://localhost:7474/](http://localhost:7474/) in a browser to use Neo4j's graphical user interface. You can use the console to run [Cypher queries](https://neo4j.com/developer/cypher-query-language/). The results will be presented in a nice graph.  
 
-    :server connect
-
-To show everything that is in the database:
+As an example, to show everything that is in the database, run:
 
     MATCH (u) RETURN (u)

@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+    neo4j:
+        image: neo4j:3.1
+        ports:
+            - 7474:7474
+            - 7687:7687
+        volumes:
+            - ./var:/data
+        environment:
+            NEO4J_AUTH: none
+#        user: ${HOST_UID}:${HOST_GID}
+
+    app:
+        build: docker/app/
+        image: matthiasnoback/cqrs-and-event-sourcing-workshop-app
+        volumes:
+            - ./:/opt
+            - ${COMPOSER_HOME}:/home/.composer
+        environment:
+            COMPOSER_HOME: /home/.composer
+            XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
+            PHP_IDE_CONFIG: "serverName=docker"
+        user: ${HOST_UID}:${HOST_GID}

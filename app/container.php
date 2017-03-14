@@ -33,8 +33,7 @@ use Twitsup\ReadModel\UserProfileRepository;
 use Xtreamwayz\Pimple\Container;
 
 $config = [
-    'database_path' => realpath(__DIR__ . '/../var'),
-    'neo4j_password' => 'neo4j'
+    'database_path' => realpath(__DIR__ . '/../var')
 ];
 
 $container = new Container();
@@ -98,10 +97,7 @@ $container['Twitsup\Domain\Model\SubscriptionRepository'] = function ($container
  */
 $container[Client::class] = function () use ($config) {
     return ClientBuilder::create()
-        ->addConnection('default', sprintf(
-            'http://neo4j:%s@localhost:7474',
-            $config['neo4j_password']
-        ))
+        ->addConnection('default', 'http://neo4j:7474')
         ->build();
 };
 

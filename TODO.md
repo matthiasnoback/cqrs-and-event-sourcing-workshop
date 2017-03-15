@@ -1,0 +1,2 @@
+- Use `NaiveSerializer` instead of PHP native `serialize()`.
+- Migrate `EventSourcing` namespace to `php-workshop-tools`?

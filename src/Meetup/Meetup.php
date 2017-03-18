@@ -2,8 +2,13 @@
 
 namespace Meetup;
 
-final class Meetup
+use EventSourcing\Aggregate\EventSourcedAggregate;
+use EventSourcing\Aggregate\EventSourcingCapabilities;
+
+final class Meetup implements EventSourcedAggregate
 {
+    use EventSourcingCapabilities;
+
     /**
      * @var string
      */
@@ -26,20 +31,38 @@ final class Meetup
 
     public static function schedule(string $id, \DateTimeInterface $date, string $title) : Meetup
     {
-        $meetup = new self();
-        $meetup->id = $id;
-        $meetup->date = $date;
-        $meetup->title = $title;
+        $meetup = new static();
+
+        $meetup->recordThat(new MeetupScheduled($id, $date, $title));
 
         return $meetup;
     }
 
+    public function whenMeetupScheduled(MeetupScheduled $event)
+    {
+
+    }
+
     public function reschedule(\DateTimeInterface $newDate)
     {
-        $this->date = $newDate;
+        if ($this->cancelled) {
+            throw new \LogicException('Can not reschedule a cancelled meetup');
+        }
+
+        $this->recordThat(new MeetupRescheduled($newDate));
+    }
+
+    public function whenMeetupRescheduled(MeetupRescheduled $event)
+    {
+
     }
 
     public function cancel()
+    {
+        $this->recordThat(new MeetupCancelled());
+    }
+
+    public function whenMeetupCancelled(MeetupCancelled $event)
     {
         $this->cancelled = true;
     }

@@ -11,6 +11,7 @@ final class Subscription implements EventSourcedAggregate
     use EventSourcingCapabilities;
 
     const STATUS_FOLLOWING = 'following';
+    const STATUS_UNFOLLOWED = 'unfollowed';
 
     private $status;
     private $followerId;
@@ -39,12 +40,22 @@ final class Subscription implements EventSourcedAggregate
         $this->recordThat(new UserFollowed($this->id, $this->followerId, $this->followeeId));
     }
 
+    public function unfollow()
+    {
+        $this->recordThat(new UserUnfollowed($this->id, $this->followerId, $this->followeeId));
+    }
+
     private function whenUserStartedFollowing(UserStartedFollowing $event)
     {
         $this->id = $event->subscriptionId();
         $this->followerId = $event->followerId();
         $this->followeeId = $event->followeeId();
         $this->status = self::STATUS_FOLLOWING;
+    }
+
+    private function whenUserUnfollowed(UserUnfollowed $event)
+    {
+        $this->status = self::STATUS_UNFOLLOWED;
     }
 
     private function whenUserFollowed(UserFollowed $event)

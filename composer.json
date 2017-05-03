@@ -5,7 +5,8 @@
         "jamesmoss/flywheel": "^0.5.1",
         "xtreamwayz/pimple-container-interop": "^1.0",
         "graphaware/neo4j-php-client": "^4.4",
-        "webmozart/console": "@dev"
+        "webmozart/console": "@dev",
+        "matthiasnoback/php-workshop-tools": "^0.8.0"
     },
     "autoload": {
         "psr-4": {

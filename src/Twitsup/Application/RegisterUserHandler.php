@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Application;
 
-use EventSourcing\Aggregate\Repository\EventSourcedAggregateRepository;
-use Ramsey\Uuid\Uuid;
+use Common\EventSourcing\Aggregate\Repository\EventSourcedAggregateRepository;
 use Twitsup\Domain\Model\User\User;
+use Twitsup\Domain\Model\User\UserId;
 use Twitsup\ReadModel\UserLookupRepository;
 
 final class RegisterUserHandler
@@ -13,6 +14,7 @@ final class RegisterUserHandler
      * @var EventSourcedAggregateRepository
      */
     private $userRepository;
+
     /**
      * @var UserLookupRepository
      */
@@ -24,7 +26,7 @@ final class RegisterUserHandler
         $this->userLookupRepository = $userLookupRepository;
     }
 
-    public function __invoke(RegisterUser $command)
+    public function __invoke(RegisterUser $command): void
     {
         if ($this->userLookupRepository->userWithUsernameExists($command->username)) {
             throw new \InvalidArgumentException(sprintf(
@@ -34,7 +36,7 @@ final class RegisterUserHandler
         }
 
         $user = User::register(
-            Uuid::fromString($command->id),
+            UserId::fromString($command->id),
             $command->username,
             $command->nickname
         );

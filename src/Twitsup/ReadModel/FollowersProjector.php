@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
-use Ramsey\Uuid\UuidInterface;
 use Twitsup\Domain\Model\Subscription\UserFollowed;
 use Twitsup\Domain\Model\Subscription\UserStartedFollowing;
+use Twitsup\Domain\Model\User\UserId;
 
 final class FollowersProjector
 {
@@ -18,17 +19,17 @@ final class FollowersProjector
         $this->repository = $repository;
     }
 
-    public function onUserStartedFollowing(UserStartedFollowing $event)
+    public function onUserStartedFollowing(UserStartedFollowing $event): void
     {
         $this->follow($event->followerId(), $event->followeeId());
     }
 
-    public function onUserFollowed(UserFollowed $event)
+    public function onUserFollowed(UserFollowed $event): void
     {
         $this->follow($event->followerId(), $event->followeeId());
     }
 
-    private function follow(UuidInterface $followerId, UuidInterface $followeeId)
+    private function follow(UserId $followerId, UserId $followeeId): void
     {
         $this->repository->follow((string)$followerId, (string)$followeeId);
     }

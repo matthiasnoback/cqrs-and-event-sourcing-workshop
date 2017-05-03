@@ -1,17 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Domain\Model\User;
 
-use EventSourcing\Aggregate\Event;
-use EventSourcing\Aggregate\EventCapabilities;
-use Ramsey\Uuid\UuidInterface;
-
-final class UserRegistered implements Event
+final class UserRegistered
 {
-    use EventCapabilities;
-
     /**
-     * @var UuidInterface
+     * @var UserId
      */
     private $id;
 
@@ -25,24 +20,24 @@ final class UserRegistered implements Event
      */
     private $nickname;
 
-    public function __construct(UuidInterface $id, string $username, string $nickname)
+    public function __construct(UserId $id, string $username, string $nickname)
     {
         $this->id = $id;
         $this->username = $username;
         $this->nickname = $nickname;
     }
 
-    public function id()
+    public function id(): UserId
     {
         return $this->id;
     }
 
-    public function username()
+    public function username(): string
     {
         return $this->username;
     }
 
-    public function nickname()
+    public function nickname(): string
     {
         return $this->nickname;
     }

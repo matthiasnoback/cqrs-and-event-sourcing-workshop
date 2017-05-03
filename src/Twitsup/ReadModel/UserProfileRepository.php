@@ -1,43 +1,31 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
-use JamesMoss\Flywheel\Config;
-use JamesMoss\Flywheel\Document;
-use JamesMoss\Flywheel\Repository;
+use Common\Persistence\Database;
 
 final class UserProfileRepository
 {
-    public function __construct($databasePath)
+    public function save(UserProfile $userProfile): void
     {
-        $this->repository = new Repository('user_profile', new Config($databasePath));
+        Database::persist($userProfile);
     }
 
-    public function save(array $data)
+    public function getByUserId(string $userId): UserProfile
     {
-        $document = new Document($data);
-        $document->setId($data['id']);
-        $this->repository->store($document);
-    }
-
-    public function getByUserId(string $userId)
-    {
-        $result = $this->repository->query()
-            ->where('id', '==', $userId)
-            ->execute()
-            ->first();
-
-        if (!$result) {
-            throw new \RuntimeException('User not found');
+        foreach (Database::retrieveAll(UserProfile::class) as $userProfile) {
+            /** @var UserProfile $userProfile */
+            if ($userProfile->id == $userId) {
+                return $userProfile;
+            }
         }
 
-        return get_object_vars($result);
+        throw new \RuntimeException('User not found');
     }
 
-    public function reset()
+    public function reset(): void
     {
-        foreach ($this->repository->getAllFiles() as $file) {
-            unlink($file);
-        }
+        Database::deleteAll(UserProfile::class);
     }
 }

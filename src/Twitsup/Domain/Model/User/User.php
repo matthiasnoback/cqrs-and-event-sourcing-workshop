@@ -1,24 +1,25 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Domain\Model\User;
 
-use EventSourcing\Aggregate\EventSourcedAggregate;
-use EventSourcing\Aggregate\EventSourcingCapabilities;
-use Ramsey\Uuid\UuidInterface;
+use Common\EventSourcing\Aggregate\EventSourcedAggregate;
+use Common\EventSourcing\Aggregate\EventSourcedAggregateCapabilities;
 
 final class User implements EventSourcedAggregate
 {
-    use EventSourcingCapabilities;
+    use EventSourcedAggregateCapabilities;
 
-    public static function register(UuidInterface $id, string $username, string $nickname) : User
+    public static function register(UserId $id, string $username, string $nickname): User
     {
         $instance = new static();
+
         $instance->recordThat(new UserRegistered($id, $username, $nickname));
 
         return $instance;
     }
 
-    private function whenUserRegistered(UserRegistered $userRegistered)
+    private function whenUserRegistered(UserRegistered $userRegistered): void
     {
         $this->id = $userRegistered->id();
     }

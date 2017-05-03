@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Twitsup\Application;
+namespace Twitsup\ReadModel;
 
-final class RegisterUser
+final class User
 {
     /**
      * @var string
@@ -15,8 +15,8 @@ final class RegisterUser
      */
     public $username;
 
-    /**
-     * @var string
-     */
-    public $nickname;
+    public function id(): string
+    {
+        return $this->id;
+    }
 }

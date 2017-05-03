@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Ports\Cli;
 
@@ -19,7 +20,7 @@ final class FollowUserCliHandler
         $this->followUserHandler = $followUserHandler;
     }
 
-    public function handle(Args $args, IO $io)
+    public function handle(Args $args, IO $io): void
     {
         $followUser = new FollowUser();
         $followUser->followerUsername = $args->getArgument('follower');

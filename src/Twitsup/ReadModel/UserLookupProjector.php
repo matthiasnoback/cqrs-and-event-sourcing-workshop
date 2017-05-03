@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
@@ -16,11 +17,12 @@ class UserLookupProjector
         $this->repository = $repository;
     }
 
-    public function __invoke(UserRegistered $event)
+    public function __invoke(UserRegistered $event): void
     {
-        $this->repository->save([
-            'id' => (string)$event->id(),
-            'username' => (string)$event->username()
-        ]);
+        $user = new User();
+        $user->id = (string)$event->id();
+        $user->username = (string)$event->username();
+
+        $this->repository->save($user);
     }
 }

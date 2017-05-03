@@ -1,44 +1,31 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
-use JamesMoss\Flywheel\Config;
-use JamesMoss\Flywheel\Document;
-use JamesMoss\Flywheel\Repository;
+use Common\Persistence\Database;
 
 final class SubscriptionLookupRepository
 {
-    public function __construct($databasePath)
+    public function save(Subscription $subscription): void
     {
-        $this->repository = new Repository('subscription_lookup', new Config($databasePath));
+        Database::persist($subscription);
     }
 
-    public function save(array $data)
+    public function getSubscriptionId(string $followerId, string $followeeId): string
     {
-        $document = new Document($data);
-        $document->setId($data['id']);
-        $this->repository->store($document);
-    }
-
-    public function getSubscriptionId(string $followerId, string $followeeId)
-    {
-        $result = $this->repository->query()
-            ->andWhere('followerId', '==', $followerId)
-            ->andWhere('followeeId', '==', $followeeId)
-            ->execute()
-            ->first();
-
-        if (!$result) {
-            throw new \RuntimeException('Subscription not found');
+        foreach (Database::retrieveAll(Subscription::class) as $subscription) {
+            /** @var Subscription $subscription */
+            if ($subscription->followerId == $followerId && $subscription->followeeId == $followeeId) {
+                return $subscription->id;
+            }
         }
 
-        return $result->id;
+        throw new \RuntimeException('Subscription not found');
     }
 
-    public function reset()
+    public function reset(): void
     {
-        foreach ($this->repository->getAllFiles() as $file) {
-            unlink($file);
-        }
+        Database::deleteAll(Subscription::class);
     }
 }

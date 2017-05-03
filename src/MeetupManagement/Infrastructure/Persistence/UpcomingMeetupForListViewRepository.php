@@ -1,6 +1,9 @@
 <?php
+declare(strict_types=1);
 
-namespace Meetup;
+namespace MeetupManagement\Infrastructure\Persistence;
+
+use MeetupManagement\Domain\ReadModel\UpcomingMeetupForListView;
 
 final class UpcomingMeetupForListViewRepository
 {
@@ -11,7 +14,7 @@ final class UpcomingMeetupForListViewRepository
      * @return UpcomingMeetupForListView
      * @throws \RuntimeException
      */
-    public function byId(string $id) : UpcomingMeetupForListView
+    public function byId(string $id): UpcomingMeetupForListView
     {
         if (!isset($this->meetups[$id])) {
             throw new \RuntimeException();
@@ -24,7 +27,7 @@ final class UpcomingMeetupForListViewRepository
      * @param string $id
      * @return void
      */
-    public function remove(string $id)
+    public function remove(string $id): void
     {
         unset($this->meetups[$id]);
     }

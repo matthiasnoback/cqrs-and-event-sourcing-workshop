@@ -1,22 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Domain\Model\Tweet;
 
-use EventSourcing\Aggregate\Event;
-use EventSourcing\Aggregate\EventCapabilities;
-use Ramsey\Uuid\UuidInterface;
+use Twitsup\Domain\Model\User\UserId;
 
-final class Tweeted implements Event
+final class Tweeted
 {
-    use EventCapabilities;
-
     /**
-     * @var UuidInterface
+     * @var TweetId
      */
     private $tweetId;
 
     /**
-     * @var UuidInterface
+     * @var UserId
      */
     private $userId;
 
@@ -25,25 +22,25 @@ final class Tweeted implements Event
      */
     private $text;
 
-    public function __construct(UuidInterface $tweetId, UuidInterface $userId, string $text)
+    /**
+     * @var TweetedAt
+     */
+    private $tweetedAt;
+
+    public function __construct(TweetId $tweetId, UserId $userId, string $text, TweetedAt $tweetedAt)
     {
         $this->tweetId = $tweetId;
         $this->userId = $userId;
         $this->text = $text;
+        $this->tweetedAt = $tweetedAt;
     }
 
-    /**
-     * @return UuidInterface
-     */
-    public function tweetId() : UuidInterface
+    public function tweetId() : TweetId
     {
         return $this->tweetId;
     }
 
-    /**
-     * @return UuidInterface
-     */
-    public function userId()
+    public function userId(): UserId
     {
         return $this->userId;
     }
@@ -51,5 +48,10 @@ final class Tweeted implements Event
     public function text() : string
     {
         return $this->text;
+    }
+
+    public function tweetedAt(): TweetedAt
+    {
+        return $this->tweetedAt;
     }
 }

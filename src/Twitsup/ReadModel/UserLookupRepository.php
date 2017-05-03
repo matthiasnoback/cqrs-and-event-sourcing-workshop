@@ -1,55 +1,45 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
-use JamesMoss\Flywheel\Config;
-use JamesMoss\Flywheel\Document;
-use JamesMoss\Flywheel\Repository;
+use Common\Persistence\Database;
 
 final class UserLookupRepository
 {
     private $repository;
 
-    public function __construct($databasePath)
+    public function save(User $user): void
     {
-        $this->repository = new Repository('user_lookup_table', new Config($databasePath));
+        Database::persist($user);
     }
 
-    public function save(array $data)
+    public function getUserIdForUsername(string $username): string
     {
-        $document = new Document($data);
-        $document->setId($data['id']);
-        $this->repository->store($document);
-    }
-
-    public function getUserIdForUsername($username)
-    {
-        $result = $this->repository->query()
-            ->andWhere('username', '==', $username)
-            ->execute()
-            ->first();
-
-        if (!$result) {
-            throw new \RuntimeException('User not found');
+        foreach (Database::retrieveAll(User::class) as $user) {
+            /** @var User $user */
+            if ($user->username == $username) {
+                return $user->id;
+            }
         }
 
-        return $result->id;
+        throw new \RuntimeException('User not found');
     }
 
-    public function userWithUsernameExists(string $username)
+    public function userWithUsernameExists(string $username): bool
     {
-        $result = $this->repository->query()
-            ->andWhere('username', '==', $username)
-            ->execute()
-            ->first();
-
-        return $result !== false;
-    }
-
-    public function reset()
-    {
-        foreach ($this->repository->getAllFiles() as $file) {
-            unlink($file);
+        foreach (Database::retrieveAll(User::class) as $user) {
+            /** @var User $user */
+            if ($user->username == $username) {
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    public function reset(): void
+    {
+        Database::deleteAll(User::class);
     }
 }

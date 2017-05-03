@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
@@ -16,12 +17,13 @@ class SubscriptionLookupProjector
         $this->repository = $repository;
     }
 
-    public function __invoke(UserStartedFollowing $event)
+    public function __invoke(UserStartedFollowing $event): void
     {
-        $this->repository->save([
-            'id' => (string)$event->subscriptionId(),
-            'followerId' => (string)$event->followerId(),
-            'followeeId' => (string)$event->followeeId()
-        ]);
+        $subscription = new Subscription();
+        $subscription->id = (string)$event->subscriptionId();
+        $subscription->followerId = (string)$event->followerId();
+        $subscription->followeeId = (string)$event->followeeId();
+
+        $this->repository->save($subscription);
     }
 }

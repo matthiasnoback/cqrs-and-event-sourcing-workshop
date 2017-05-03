@@ -1,58 +1,45 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Domain\Model\Subscription;
 
-use EventSourcing\Aggregate\Event;
-use EventSourcing\Aggregate\EventCapabilities;
-use Ramsey\Uuid\UuidInterface;
+use Twitsup\Domain\Model\User\UserId;
 
-final class UserFollowed implements Event
+final class UserFollowed
 {
-    use EventCapabilities;
-
     /**
-     * @var UuidInterface
+     * @var SubscriptionId
      */
     private $subscriptionId;
 
     /**
-     * @var UuidInterface
+     * @var UserId
      */
     private $followerId;
 
     /**
-     * @var UuidInterface
+     * @var UserId
      */
     private $followeeId;
 
-    public function __construct(UuidInterface $subscriptionId, UuidInterface $followerId, UuidInterface $followeeId)
+    public function __construct(SubscriptionId $subscriptionId, UserId $followerId, UserId $followeeId)
     {
         $this->subscriptionId = $subscriptionId;
         $this->followerId = $followerId;
         $this->followeeId = $followeeId;
     }
 
-    /**
-     * @return UuidInterface
-     */
-    public function subscriptionId()
+    public function subscriptionId(): SubscriptionId
     {
         return $this->subscriptionId;
     }
 
-
-    /**
-     * @return UuidInterface
-     */
-    public function followerId()
+    public function followerId(): UserId
     {
         return $this->followerId;
     }
 
-    /**
-     * @return UuidInterface
-     */
-    public function followeeId()
+    public function followeeId(): UserId
     {
         return $this->followeeId;
     }

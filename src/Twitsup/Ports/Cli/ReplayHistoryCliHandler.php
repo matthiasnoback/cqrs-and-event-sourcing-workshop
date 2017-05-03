@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Ports\Cli;
 
-use EventSourcing\EventStore\EventStore;
-use EventSourcing\Projection\EventDispatcher;
+use Common\EventSourcing\EventStore\EventStore;
+use Common\EventDispatcher\EventDispatcher;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 

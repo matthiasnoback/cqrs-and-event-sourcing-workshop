@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Test\Acceptance;
 
@@ -8,7 +9,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-use EventSourcing\EventStore\StorageFacility;
+use Common\EventSourcing\EventStore\StorageFacility;
 use Ramsey\Uuid\Uuid;
 use Twitsup\Application\FollowUser;
 use Twitsup\Application\FollowUserHandler;
@@ -46,7 +47,7 @@ class TwitsupContext implements Context, SnippetAcceptingContext
         foreach ($this->container['read_model_repositories'] as $repository) {
             $repository->reset();
         }
-        $this->container[StorageFacility::class]->reset();
+        $this->container[StorageFacility::class]->deleteAll();
     }
 
     /**
@@ -118,7 +119,7 @@ class TwitsupContext implements Context, SnippetAcceptingContext
     {
         /** @var TimelineRepository $timelineRepository */
         $timelineRepository = $this->container->get(TimelineRepository::class);
-        $timeline = $timelineRepository->timelineFor($this->userId);
+        $timeline = $timelineRepository->timelineFor((string)$this->userId);
         Assertion::contains($timeline, $tweetText);
     }
 }

@@ -1,28 +1,39 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Domain\Model\Subscription;
 
-use EventSourcing\Aggregate\EventSourcedAggregate;
-use EventSourcing\Aggregate\EventSourcingCapabilities;
-use Ramsey\Uuid\UuidInterface;
+use Common\EventSourcing\Aggregate\EventSourcedAggregate;
+use Common\EventSourcing\Aggregate\EventSourcedAggregateCapabilities;
+use Twitsup\Domain\Model\User\UserId;
 
 final class Subscription implements EventSourcedAggregate
 {
-    use EventSourcingCapabilities;
+    use EventSourcedAggregateCapabilities;
 
     const STATUS_FOLLOWING = 'following';
 
-    private $status;
-    private $followerId;
-    private $followeeId;
+    /**
+     * @var SubscriptionId
+     */
+    private $id;
 
     /**
-     * @param UuidInterface $subscriptionId
-     * @param UuidInterface $followerId
-     * @param UuidInterface $followeeId
-     * @return Subscription
+     * @var string
      */
-    public static function startFollowing(UuidInterface $subscriptionId, UuidInterface $followerId, UuidInterface $followeeId)
+    private $status;
+
+    /**
+     * @var UserId
+     */
+    private $followerId;
+
+    /**
+     * @var UserId
+     */
+    private $followeeId;
+
+    public static function startFollowing(SubscriptionId $subscriptionId, UserId $followerId, UserId $followeeId): Subscription
     {
         if ($followerId->equals($followeeId)) {
             throw new AUserCanNotFollowThemselves();
@@ -34,12 +45,7 @@ final class Subscription implements EventSourcedAggregate
         return $instance;
     }
 
-    public function follow()
-    {
-        $this->recordThat(new UserFollowed($this->id, $this->followerId, $this->followeeId));
-    }
-
-    private function whenUserStartedFollowing(UserStartedFollowing $event)
+    private function whenUserStartedFollowing(UserStartedFollowing $event): void
     {
         $this->id = $event->subscriptionId();
         $this->followerId = $event->followerId();
@@ -47,7 +53,12 @@ final class Subscription implements EventSourcedAggregate
         $this->status = self::STATUS_FOLLOWING;
     }
 
-    private function whenUserFollowed(UserFollowed $event)
+    public function follow(): void
+    {
+        $this->recordThat(new UserFollowed($this->id, $this->followerId, $this->followeeId));
+    }
+
+    private function whenUserFollowed(UserFollowed $event): void
     {
         $this->status = self::STATUS_FOLLOWING;
     }

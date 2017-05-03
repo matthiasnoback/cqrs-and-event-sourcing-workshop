@@ -22,4 +22,5 @@ services:
             COMPOSER_HOME: /home/.composer
             XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
             PHP_IDE_CONFIG: "serverName=docker"
+            DB_PATH: /opt/var
         user: ${HOST_UID}:${HOST_GID}

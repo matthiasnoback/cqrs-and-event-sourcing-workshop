@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
@@ -31,14 +32,14 @@ final class TimelineProjector
         $this->timelineRepository = $timelineRepository;
     }
 
-    public function __invoke(Tweeted $event)
+    public function __invoke(Tweeted $event): void
     {
-        $tweetedAt = $event->metadata('created_at');
+        $tweetedAt = $event->tweetedAt();
         $userProfile = $this->userProfileRepository->getByUserId((string)$event->userId());
         $followerIds = $this->followersRepository->getFollowerIds((string)$event->userId());
 
         foreach ($followerIds as $followerId) {
-            $this->timelineRepository->addToTimeline($followerId, $userProfile, $event->text(), $tweetedAt);
+            $this->timelineRepository->addToTimeline($followerId, $userProfile, $event->text(), $tweetedAt->toDateTime());
         }
     }
 }

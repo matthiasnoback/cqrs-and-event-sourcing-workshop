@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\ReadModel;
 
@@ -35,7 +36,7 @@ final class FollowersRepository
         }
     }
 
-    public function follow($followerId, $followeeId)
+    public function follow($followerId, $followeeId): void
     {
         $this->mergeNodes($followerId, $followeeId);
         $this->client->run(
@@ -50,7 +51,7 @@ EOD
         );
     }
 
-    private function mergeNodes($followerId, $followeeId)
+    private function mergeNodes($followerId, $followeeId): void
     {
         $stack = $this->client->stack();
         $stack->push(
@@ -68,7 +69,7 @@ EOD
         $this->client->runStack($stack);
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->client->run('MATCH (u) DETACH DELETE u');
     }

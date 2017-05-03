@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Twitsup\Ports\Cli;
 
@@ -21,7 +22,7 @@ class TwitsupApplicationConfig extends DefaultApplicationConfig
         $this->container = $container;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 

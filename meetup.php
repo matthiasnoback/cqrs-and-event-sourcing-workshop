@@ -10,8 +10,57 @@ require __DIR__ . '/vendor/autoload.php';
 /*
  * The test framework
  */
-function it($m,$p){echo "\033[".($p?"32m✔":"31m✘")." It $m\033[0m\n"; if(!$p)$GLOBALS['f']=1;}function done(){if(@$GLOBALS['f'])die(1);}
-function throws($exp,\Closure $cb){try{$cb();}catch(\Exception $e){return $e instanceof $exp;}return false;}
+function it($m, $p)
+{
+    echo "\033[" . ($p ? "32m✔" : "31m✘") . " It $m\033[0m\n";
+    if (!$p) {
+        $GLOBALS['f'] = 1;
+    }
+}
+
+function done()
+{
+    if (@$GLOBALS['f']) {
+        die(1);
+    }
+}
+
+function throws($exp, \Closure $cb)
+{
+    try {
+        $cb();
+    } catch (\Exception $e) {
+        return $e instanceof $exp;
+    }
+    return false;
+}
+
+$repository = new \Meetup\UpcomingMeetupForListViewRepository();
+
+$eventDispatcher = new \EventSourcing\Projection\EventDispatcher();
+$eventDispatcher->on(MeetupScheduled::class, function (MeetupScheduled $event) use ($repository) {
+    $upcomingMeetup = new \Meetup\UpcomingMeetupForListView();
+    $upcomingMeetup->id = $event->id();
+    $upcomingMeetup->title = $event->title();
+    $upcomingMeetup->date = $event->date();
+
+    $repository->save($upcomingMeetup->id, $upcomingMeetup);
+
+    dump($upcomingMeetup);
+});
+$eventDispatcher->on(MeetupRescheduled::class, function (MeetupRescheduled $event) use ($repository) {
+    $upcomingMeetup = $repository->byId($event->id());
+    $upcomingMeetup->date = $event->newDate();
+
+    $repository->save($upcomingMeetup->id, $upcomingMeetup);
+
+    dump($upcomingMeetup);
+});
+$eventDispatcher->on(MeetupCancelled::class, function(MeetupCancelled $event) use ($repository) {
+    $repository->remove($event->id());
+
+    dump($repository->all());
+});
 
 /*
  * Scheduling
@@ -65,3 +114,7 @@ it('should have the provided id', $meetup->id() == $id);
 it('should have the provided title', $reconstitutedMeetup->title() == $title);
 it('should be rescheduled on the provided date', $reconstitutedMeetup->date() == $newDate);
 it('should be cancelled', $reconstitutedMeetup->hasBeenCancelled());
+
+foreach ($allEvents as $event) {
+    $eventDispatcher->dispatch($event);
+}

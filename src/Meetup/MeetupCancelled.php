@@ -14,4 +14,9 @@ final class MeetupCancelled
     {
         $this->id = $id;
     }
+
+    public function id()
+    {
+        return $this->id;
+    }
 }

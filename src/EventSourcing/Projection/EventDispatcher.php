@@ -13,7 +13,7 @@ final class EventDispatcher
         $this->listeners[$eventType][] = $listener;
     }
 
-    public function dispatch(Event $event)
+    public function dispatch($event)
     {
         $listeners = $this->listeners[get_class($event)] ?? [];
         foreach ($listeners as $listener) {

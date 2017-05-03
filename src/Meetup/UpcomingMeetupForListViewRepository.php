@@ -38,4 +38,9 @@ final class UpcomingMeetupForListViewRepository
     {
         $this->meetups[$id] = $meetup;
     }
+
+    public function all(): array
+    {
+        return $this->meetups;
+    }
 }

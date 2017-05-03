@@ -21,6 +21,11 @@ final class MeetupRescheduled
         $this->newDate = $newDate;
     }
 
+    public function id()
+    {
+        return $this->id;
+    }
+
     public function newDate()
     {
         return $this->newDate;

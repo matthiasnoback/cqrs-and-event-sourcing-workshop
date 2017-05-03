@@ -16,6 +16,8 @@ use Twitsup\Application\RegisterUser;
 use Twitsup\Application\RegisterUserHandler;
 use Twitsup\Application\SendTweet;
 use Twitsup\Application\SendTweetHandler;
+use Twitsup\Application\UnfollowUser;
+use Twitsup\Application\UnfollowUserHandler;
 use Twitsup\ReadModel\TimelineRepository;
 use Twitsup\ReadModel\UserLookupRepository;
 
@@ -120,5 +122,33 @@ class TwitsupContext implements Context, SnippetAcceptingContext
         $timelineRepository = $this->container->get(TimelineRepository::class);
         $timeline = $timelineRepository->timelineFor($this->userId);
         Assertion::contains($timeline, $tweetText);
+    }
+
+    /**
+     * @When I unfollow :followeeUsername
+     */
+    public function iUnfollow($followeeUsername)
+    {
+        $unfollowUserHandler = $this->container->get(UnfollowUserHandler::class);
+
+        $unfollowUser = new UnfollowUser();
+        $unfollowUser->followerUsername = $this->username;
+        $unfollowUser->followeeUsername = $followeeUsername;
+
+        $unfollowUserHandler->__invoke($unfollowUser);
+    }
+
+    /**
+     * @Then I don't see on my timeline: :tweetText
+     */
+    public function iDonTSeeOnMyTimeline($tweetText)
+    {
+        /** @var TimelineRepository $timelineRepository */
+        $timelineRepository = $this->container->get(TimelineRepository::class);
+        $timeline = $timelineRepository->timelineFor($this->userId);
+
+        if (mb_strpos($timeline, $tweetText) !== false) {
+            throw new \RuntimeException('The timeline did contain the given tweet');
+        }
     }
 }

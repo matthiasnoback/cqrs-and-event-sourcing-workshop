@@ -50,6 +50,21 @@ EOD
         );
     }
 
+    public function unfollow($followerId, $followeeId)
+    {
+        $this->mergeNodes($followerId, $followeeId);
+        $this->client->run(
+            <<<EOD
+MATCH (follower:User { user_id: {followerId} })-[relation:FOLLOWS]->(followee:User { user_id: {followeeId} })
+DELETE relation
+EOD
+            , [
+                'followerId' => $followerId,
+                'followeeId' => $followeeId
+            ]
+        );
+    }
+
     private function mergeNodes($followerId, $followeeId)
     {
         $stack = $this->client->stack();

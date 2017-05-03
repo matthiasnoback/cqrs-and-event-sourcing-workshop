@@ -10,7 +10,6 @@ Feature:
     And ericcartman tweets "Screw you guys, I'm going home."
     Then I see on my timeline: "Screw you guys, I'm going home."
 
-  @wip
   Scenario: Unfollow someone and don't see new tweets appear in the timeline
     Given I've registered myself as matthiasnoback ("Matthias Noback")
     And a user ericcartman ("Eric Cartman") has also registered themselves
